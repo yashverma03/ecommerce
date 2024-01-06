@@ -1,0 +1,91 @@
+.background {
+  @apply min-w-full
+  min-h-screen
+  flex
+  justify-center
+  items-center
+  bg-[#f3d2d8];
+}
+
+.container {
+  @apply max-w-[600px]
+  w-full
+  flex
+  flex-col
+  justify-center
+  items-center
+  bg-[white]
+  rounded-[10px]
+  shadow-2xl
+  px-[20px]
+  py-[60px]
+  mx-[5%]
+  my-[30px];
+}
+
+.title {
+  @apply font-[600]
+  text-[28px]
+  text-center
+  mb-[30px];
+}
+
+.form {
+  @apply max-w-[600px]
+  w-full
+  flex
+  flex-col
+  gap-[10px]
+  items-center;
+}
+
+.inputWrap {
+  @apply max-w-[500px]
+  w-full
+  flex
+  items-center
+  gap-[5%];
+}
+
+.label {
+  @apply w-full
+  font-[400]
+  text-[16px];
+}
+
+.input {
+  @apply w-full
+  h-[40px]
+  px-[20px]
+  bg-[#f9f7f7]
+  rounded-[10px]
+  border-none
+  overflow-ellipsis
+  focus:outline-none
+  focus:bg-[#e2dfdf];
+}
+
+.subtitle {
+  @apply font-[500]
+  text-[14px]
+  text-center;
+}
+
+.link {
+  @apply no-underline
+  text-[blue]
+  hover:underline;
+}
+
+.button {
+  @apply w-[200px]
+  h-[40px]
+  rounded-[10px]
+  border-none
+  bg-[#2929f2]
+  text-[white]
+  mt-[30px]
+  mb-[10px]
+  cursor-pointer
+  hover:bg-[darkblue];
+}
