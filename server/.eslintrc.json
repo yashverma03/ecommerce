@@ -27,7 +27,6 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/semi": "off",
     "multiline-ternary": "off",
-    "@typescript-eslint/consistent-indexed-object-style": "off",
-    "no-console": ["warn", { "allow": ["error"] }]
+    "@typescript-eslint/consistent-indexed-object-style": "off"
   }
 }
