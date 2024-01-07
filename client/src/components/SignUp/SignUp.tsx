@@ -1,20 +1,44 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import styles from './SignUp.module.css';
+import api from '../../utils/api';
 
 const SignUp = () => {
   const initialFormData = {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    type: 'customer' as 'customer' | 'seller'
   };
 
   const [formData, setFormData] = useState(initialFormData);
 
+  const postFormData = async (formData: typeof initialFormData) => {
+    try {
+      const response = await api({
+        method: 'post',
+        url: 'sign-up',
+        data: formData
+      });
+
+      return response?.data;
+    } catch (error) {
+      console.error('error in postFormData: ', error);
+    }
+  };
+
+  const { mutate, data, isSuccess } = useMutation({
+    mutationFn: postFormData
+  });
+
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    mutate(formData);
+  };
+
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-
     setFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
   };
 
@@ -57,10 +81,8 @@ const SignUp = () => {
     });
   };
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    console.log(formData);
+  const getError = () => {
+    return isSuccess && !data && <p className={styles.error}>Error in creating account !</p>;
   };
 
   return (
@@ -71,6 +93,7 @@ const SignUp = () => {
         <form className={styles.form} onSubmit={handleOnSubmit}>
           {getInputs()}
           <button className={styles.button}>Sign Up</button>
+          {getError()}
         </form>
 
         <h2 className={styles.subtitle}>

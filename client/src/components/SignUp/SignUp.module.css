@@ -4,7 +4,7 @@
   flex
   justify-center
   items-center
-  bg-[#f3d2d8];
+  bg-[#d3d2e9];
 }
 
 .container {
@@ -65,18 +65,6 @@
   focus:bg-[#e2dfdf];
 }
 
-.subtitle {
-  @apply font-[500]
-  text-[14px]
-  text-center;
-}
-
-.link {
-  @apply no-underline
-  text-[blue]
-  hover:underline;
-}
-
 .button {
   @apply w-[200px]
   h-[40px]
@@ -85,7 +73,26 @@
   bg-[#2929f2]
   text-[white]
   mt-[30px]
-  mb-[10px]
   cursor-pointer
   hover:bg-[darkblue];
+}
+
+.error {
+  @apply text-[red]
+  text-[14px]
+  text-center
+  m-0;
+}
+
+.subtitle {
+  @apply font-[500]
+  text-[14px]
+  text-center
+  mt-[30px];
+}
+
+.link {
+  @apply no-underline
+  text-[blue]
+  hover:underline;
 }
