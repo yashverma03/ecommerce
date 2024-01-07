@@ -8,8 +8,7 @@ const SignUp = () => {
   const initialFormData = {
     name: '',
     email: '',
-    password: '',
-    type: 'customer' as 'customer' | 'seller'
+    password: ''
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -88,7 +87,7 @@ const SignUp = () => {
   return (
     <main className={styles.background}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Create user account</h1>
+        <h1 className={styles.title}>Create your account</h1>
 
         <form className={styles.form} onSubmit={handleOnSubmit}>
           {getInputs()}

@@ -5,14 +5,13 @@ import User from '../model/user.ts';
 export const createUser = (req: Request, res: Response) => {
   const _createUser = async () => {
     try {
-      const { name, email, password, type } = req.body;
+      const { name, email, password } = req.body;
       const hashedPassword = await bcrypt.hash(password as string, 10);
 
       const newUser = await User.create({
         name,
         email,
-        password: hashedPassword,
-        type
+        password: hashedPassword
       });
 
       res.status(201).json({ message: 'User created successfully', user: newUser });
