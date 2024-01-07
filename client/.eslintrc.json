@@ -39,6 +39,7 @@
         "multiline-ternary": "off",
         "@typescript-eslint/consistent-indexed-object-style": "off",
         "react/no-unescaped-entities": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
         "no-console": ["warn", { "allow": ["error"] }]
       }
     }
