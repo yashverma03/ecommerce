@@ -1,15 +1,17 @@
 import type { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
 import User from '../model/user.ts';
 
 export const createUser = (req: Request, res: Response) => {
-  void (async () => {
+  const _createUser = async () => {
     try {
       const { name, email, password, type } = req.body;
+      const hashedPassword = await bcrypt.hash(password as string, 10);
 
       const newUser = await User.create({
         name,
         email,
-        password,
+        password: hashedPassword,
         type
       });
 
@@ -18,5 +20,7 @@ export const createUser = (req: Request, res: Response) => {
       console.error('Error creating user:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  })();
+  };
+
+  void _createUser();
 };
