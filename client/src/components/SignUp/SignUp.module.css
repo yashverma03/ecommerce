@@ -1,5 +1,5 @@
 .background {
-  @apply min-w-full
+  @apply w-full
   min-h-screen
   flex
   justify-center
@@ -35,7 +35,7 @@
   w-full
   flex
   flex-col
-  gap-[10px]
+  gap-[20px]
   items-center;
 }
 
@@ -80,8 +80,7 @@
 .error {
   @apply text-[red]
   text-[14px]
-  text-center
-  m-0;
+  text-center;
 }
 
 .subtitle {
@@ -92,7 +91,6 @@
 }
 
 .link {
-  @apply no-underline
-  text-[blue]
+  @apply text-[blue]
   hover:underline;
 }
