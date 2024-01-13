@@ -29,22 +29,21 @@ const SignUp = () => {
     }
   };
 
+  const handleOnSuccess = (mutationData: unknown) => {
+    if (mutationData !== undefined) {
+      setFormData(initialFormData);
+      navigate('/login');
+    }
+  };
+
   const mutation = useMutation({
-    mutationFn: postFormData
+    mutationFn: postFormData,
+    onSuccess: handleOnSuccess
   });
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const _handleOnSubmit = async () => {
-      event.preventDefault();
-      await mutation.mutateAsync(formData);
-
-      if (mutation.isSuccess) {
-        setFormData(initialFormData);
-        navigate('/login');
-      }
-    };
-
-    void _handleOnSubmit();
+    event.preventDefault();
+    mutation.mutate(formData);
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +98,7 @@ const SignUp = () => {
   const getError = () => {
     return (
       mutation.isSuccess &&
-      !mutation.data && <p className={styles.error}>Error in creating account !</p>
+      mutation.data === undefined && <p className={styles.error}>Error in creating account</p>
     );
   };
 
