@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import styles from './SignUp.module.css';
 import api from '../../utils/api';
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const initialFormData = {
     name: '',
     email: '',
@@ -27,13 +29,22 @@ const SignUp = () => {
     }
   };
 
-  const { mutate, data, isSuccess } = useMutation({
+  const mutation = useMutation({
     mutationFn: postFormData
   });
 
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    mutate(formData);
+    const _handleOnSubmit = async () => {
+      event.preventDefault();
+      await mutation.mutateAsync(formData);
+
+      if (mutation.isSuccess) {
+        setFormData(initialFormData);
+        navigate('/login');
+      }
+    };
+
+    void _handleOnSubmit();
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,8 +91,16 @@ const SignUp = () => {
     });
   };
 
+  const getButton = () => {
+    const buttonText = mutation.isPending ? 'Creating your account...' : 'Sign Up';
+    return <button className={styles.button}>{buttonText}</button>;
+  };
+
   const getError = () => {
-    return isSuccess && !data && <p className={styles.error}>Error in creating account !</p>;
+    return (
+      mutation.isSuccess &&
+      !mutation.data && <p className={styles.error}>Error in creating account !</p>
+    );
   };
 
   return (
@@ -91,7 +110,7 @@ const SignUp = () => {
 
         <form className={styles.form} onSubmit={handleOnSubmit}>
           {getInputs()}
-          <button className={styles.button}>Sign Up</button>
+          {getButton()}
           {getError()}
         </form>
 
