@@ -2,15 +2,15 @@ import { DataTypes } from 'sequelize';
 import type { Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import sequelize from '../database/database.ts';
 
-export interface UserAttributes
-  extends Model<InferAttributes<UserAttributes>, InferCreationAttributes<UserAttributes>> {
+interface UserInterface
+  extends Model<InferAttributes<UserInterface>, InferCreationAttributes<UserInterface>> {
   id: CreationOptional<number>;
   name: string;
   email: string;
   password: string;
 }
 
-const User = sequelize.define<UserAttributes>('User', {
+const User = sequelize.define<UserInterface>('User', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
