@@ -1,0 +1,58 @@
+.container {
+  @apply flex
+  justify-between
+  gap-[5%]
+  bg-[#272626]
+  text-white
+  py-[20px]
+  px-[5%]
+  mx-auto;
+}
+
+.logoWrap,
+.links,
+.socialMedias {
+  @apply max-w-[190px]
+  min-h-[200px]
+  flex
+  flex-col
+  gap-[10px]
+  justify-center;
+}
+
+.logo {
+  @apply w-[60px]
+  h-[60px]
+  cursor-pointer;
+}
+
+.copyright {
+  @apply text-[10px]
+  mt-[20px];
+}
+
+.links {
+  @apply min-w-[80px];
+}
+
+.heading {
+  @apply text-[20px]
+  text-[#b9b8b8];
+}
+
+.link {
+  @apply text-[16px]
+  text-white
+  no-underline
+  mb-[6px]
+  hover:underline;
+}
+
+.socialMedias {
+  @apply min-w-[130px];
+}
+
+.socialMediaIcon {
+  @apply w-full
+  h-[20px];
+}
