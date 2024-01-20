@@ -3,11 +3,16 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../model/user.ts';
 
-export const createUser = (req: Request, res: Response) => {
-  const _createUser = async () => {
+export const signUpUser = (req: Request, res: Response) => {
+  const _signUpUser = async () => {
     try {
       const { name, email, password } = req.body;
       const hashedPassword = await bcrypt.hash(password as string, 10);
+
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser !== null) {
+        return res.status(400).json({ error: 'Email already exists' });
+      }
 
       const newUser = await User.create({
         name,
@@ -15,18 +20,28 @@ export const createUser = (req: Request, res: Response) => {
         password: hashedPassword
       });
 
-      res.status(201).json({ message: 'User created successfully', user: newUser });
+      const { JWT_SECRET } = process.env;
+      const token = jwt.sign({ userId: newUser.id }, JWT_SECRET as string);
+
+      res.status(201).json({
+        message: 'User created successfully',
+        data: {
+          name: newUser.name,
+          email: newUser.email,
+          token
+        }
+      });
     } catch (error) {
       console.error('Error creating user:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
 
-  void _createUser();
+  void _signUpUser();
 };
 
-export const getUser = (req: Request, res: Response) => {
-  const _getUser = async () => {
+export const loginUser = (req: Request, res: Response) => {
+  const _loginUser = async () => {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ where: { email } });
@@ -44,12 +59,19 @@ export const getUser = (req: Request, res: Response) => {
       const { JWT_SECRET } = process.env;
       const token = jwt.sign({ userId: user.id }, JWT_SECRET as string);
 
-      res.status(200).json({ message: 'User found', user, token });
+      res.status(200).json({
+        message: 'User found',
+        data: {
+          name: user.name,
+          email: user.email,
+          token
+        }
+      });
     } catch (error) {
       console.error('Error getting user:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
 
-  void _getUser();
+  void _loginUser();
 };
