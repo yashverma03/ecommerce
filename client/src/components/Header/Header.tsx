@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './Header.module.css';
 import logo from '../../assets/logo.svg';
@@ -11,6 +11,7 @@ import { getFromLocalStorage } from '../../utils/localStorageApi';
 const Header = () => {
   const search = useSelector((state: RootState) => state.search.value);
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
   const user = getFromLocalStorage('user');
 
@@ -46,8 +47,14 @@ const Header = () => {
     );
   };
 
+  const getClassName = () => {
+    const hideOnPages = ['/login', '/sign-up'];
+    const hide = hideOnPages.includes(location.pathname);
+    return hide ? 'hide' : styles.main;
+  };
+
   return (
-    <main className={styles.main}>
+    <main className={getClassName()}>
       <Link to='/'>
         <img className={styles.logo} src={logo} alt='logo' />
       </Link>

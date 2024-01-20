@@ -34,8 +34,14 @@ const Footer = () => {
     ));
   };
 
+  const getClassName = () => {
+    const hideOnPages = ['/login', '/sign-up'];
+    const hide = hideOnPages.includes(location.pathname);
+    return hide ? 'hide' : styles.main;
+  };
+
   return (
-    <main className={styles.container}>
+    <main className={getClassName()}>
       <section className={styles.logoWrap}>
         <img className={styles.logo} src={logo} alt='logo' />
         <h2 className={styles.copyright}>© Ecommerce 2024, all rights reserved</h2>
