@@ -4,7 +4,15 @@ import { QueryClient } from '@tanstack/react-query';
 const { VITE_BASE_URL } = import.meta.env;
 const token = localStorage.getItem('token');
 
-export const api = axios.create({
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    }
+  }
+});
+
+const api = axios.create({
   baseURL: VITE_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -12,6 +20,20 @@ export const api = axios.create({
   }
 });
 
-export const queryClient = new QueryClient();
+export const loginUser = async (body: Record<string, string>) => {
+  try {
+    const response = await api.post('login', body);
+    return response?.data;
+  } catch (error) {
+    console.error('Error in logging user: ', error);
+  }
+};
 
-export default api;
+export const signUpUser = async (body: Record<string, string>) => {
+  try {
+    const response = await api.post('sign-up', body);
+    return response?.data;
+  } catch (error) {
+    console.error('Error in signing user: ', error);
+  }
+};

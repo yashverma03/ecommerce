@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import styles from './Login.module.css';
-import api from '../../utils/api';
+import { loginUser } from '../../utils/api';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,39 +14,23 @@ const Login = () => {
 
   const [formData, setFormData] = useState(initialFormData);
 
-  const postFormData = async (formData: typeof initialFormData) => {
-    try {
-      const response = await api({
-        method: 'post',
-        url: 'login',
-        data: formData
-      });
-
-      return response?.data;
-    } catch (error) {
-      console.error('error in logging: ', error);
+  const { mutate, data, isPending, isSuccess, isError } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (mutationData) => {
+      if (mutationData !== undefined) {
+        localStorage.setItem('token', mutationData.token as string);
+        setFormData(initialFormData);
+        navigate('/');
+      }
     }
-  };
-
-  const handleOnSuccess = (mutationData: any) => {
-    if (mutationData !== undefined) {
-      localStorage.setItem('token', mutationData.token as string);
-      setFormData(initialFormData);
-      navigate('/');
-    }
-  };
-
-  const mutation = useMutation({
-    mutationFn: postFormData,
-    onSuccess: handleOnSuccess
   });
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    mutation.mutate(formData);
+    mutate(formData);
   };
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
   };
@@ -77,7 +61,7 @@ const Login = () => {
             placeholder={input.placeholder}
             type={input.type ?? 'text'}
             value={formData[input.id as keyof typeof formData]}
-            onChange={handleOnChange}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -85,15 +69,13 @@ const Login = () => {
     });
   };
 
-  const getButton = () => {
-    const buttonText = mutation.isPending ? 'Logging you in...' : 'Login';
-    return <button className={styles.button}>{buttonText}</button>;
-  };
+  const buttonText = isPending ? 'Logging you in...' : 'Login';
 
   const getError = () => {
     return (
-      mutation.isSuccess &&
-      mutation.data === undefined && <p className={styles.error}>Error in logging</p>
+      ((isSuccess && data === undefined) || isError) && (
+        <p className={styles.error}>Error in logging</p>
+      )
     );
   };
 
@@ -102,9 +84,9 @@ const Login = () => {
       <div className={styles.container}>
         <h1 className={styles.title}>Login your account</h1>
 
-        <form className={styles.form} onSubmit={handleOnSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {getInputs()}
-          {getButton()}
+          <button className={styles.button}>{buttonText}</button>
           {getError()}
         </form>
 
