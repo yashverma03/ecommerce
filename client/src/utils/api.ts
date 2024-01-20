@@ -1,17 +1,8 @@
 import axios from 'axios';
-import { QueryClient } from '@tanstack/react-query';
 import { getFromLocalStorage } from './localStorageApi';
 
 const { VITE_BASE_URL } = import.meta.env;
 const authToken = getFromLocalStorage('user').token;
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false
-    }
-  }
-});
 
 const api = axios.create({
   baseURL: VITE_BASE_URL,
