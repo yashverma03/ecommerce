@@ -5,7 +5,7 @@ import './App.css';
 import queryClient from './utils/queryClient';
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/Login/Login';
-import Home from './components/Home/Home';
+import Products from './components/Products/Products';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { store } from './utils/store/store';
@@ -21,7 +21,7 @@ const App = () => {
           <Routes>
             <Route path='/sign-up' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/' element={<Home />} />
+            <Route path='/' element={<Products />} />
 
             <Route path='/' element={<PrivateRoute />}>
               {/* TODO: List all private routes here */}

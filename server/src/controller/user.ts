@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../model/user.ts';
 
 export const signUpUser = (req: Request, res: Response) => {
-  const _signUpUser = async () => {
+  const handleSignUpUser = async () => {
     try {
       const { name, email, password } = req.body;
       const hashedPassword = await bcrypt.hash(password as string, 10);
@@ -37,11 +37,11 @@ export const signUpUser = (req: Request, res: Response) => {
     }
   };
 
-  void _signUpUser();
+  void handleSignUpUser();
 };
 
 export const loginUser = (req: Request, res: Response) => {
-  const _loginUser = async () => {
+  const handleLoginUser = async () => {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ where: { email } });
@@ -73,5 +73,5 @@ export const loginUser = (req: Request, res: Response) => {
     }
   };
 
-  void _loginUser();
+  void handleLoginUser();
 };
