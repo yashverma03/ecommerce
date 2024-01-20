@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import styles from './SignUp.module.css';
 import { signUpUser } from '../../utils/api';
+import { setToLocalStorage } from '../../utils/localStorageApi';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -19,8 +20,9 @@ const SignUp = () => {
     mutationFn: signUpUser,
     onSuccess: (mutationData) => {
       if (mutationData !== undefined) {
+        setToLocalStorage('user', mutationData.data);
         setFormData(initialFormData);
-        navigate('/login');
+        navigate('/');
       }
     }
   });
