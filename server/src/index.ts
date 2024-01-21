@@ -12,7 +12,6 @@ app.use(cors());
 app.use('/api/v1', router);
 
 const { PORT } = process.env;
-
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+  console.log(`Server connected on port ${PORT}`);
 });
