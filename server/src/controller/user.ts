@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../model/user.ts';
 
 export const createUser = (req: Request, res: Response) => {
-  const handleCreateUser = async () => {
+  const request = async () => {
     try {
       const { name, email, password } = req.body;
       const hashedPassword = await bcrypt.hash(password as string, 10);
@@ -32,16 +32,16 @@ export const createUser = (req: Request, res: Response) => {
         }
       });
     } catch (error) {
-      console.error('Error creating user:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error('Error creating user', error);
+      res.status(500).json({ error });
     }
   };
 
-  void handleCreateUser();
+  void request();
 };
 
 export const getUserByEmail = (req: Request, res: Response) => {
-  const handleGetUserByEmail = async () => {
+  const request = async () => {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ where: { email } });
@@ -68,10 +68,10 @@ export const getUserByEmail = (req: Request, res: Response) => {
         }
       });
     } catch (error) {
-      console.error('Error getting user:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error('Error getting user', error);
+      res.status(500).json({ error });
     }
   };
 
-  void handleGetUserByEmail();
+  void request();
 };
