@@ -14,9 +14,9 @@ router.post('/sign-up', createUser);
 router.post('/login', getUserByEmail);
 
 router.get('/products', getProducts);
+router.get('/product/:id', getProductById);
 router.get('/products/search', getProductsByName);
 router.get('/products/categories', getCategories);
-router.get('/products/:id', getProductById);
 router.get('/products/category/:name', getProductsByCategory);
 
 export default router;
