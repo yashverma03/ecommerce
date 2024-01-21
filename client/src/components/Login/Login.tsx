@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import styles from './Login.module.css';
-import { loginUser } from '../../utils/api';
+import { getUserByEmail } from '../../utils/api';
 import { setToLocalStorage } from '../../utils/localStorageApi';
 
 const Login = () => {
@@ -16,10 +16,10 @@ const Login = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const { mutate, data, isPending, isSuccess, isError } = useMutation({
-    mutationFn: loginUser,
+    mutationFn: getUserByEmail,
     onSuccess: (mutationData) => {
       if (mutationData !== undefined) {
-        setToLocalStorage('user', mutationData.data)
+        setToLocalStorage('user', mutationData.data);
         setFormData(initialFormData);
         navigate('/');
       }

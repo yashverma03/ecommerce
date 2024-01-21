@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import styles from './SignUp.module.css';
-import { signUpUser } from '../../utils/api';
+import { createUser } from '../../utils/api';
 import { setToLocalStorage } from '../../utils/localStorageApi';
 
 const SignUp = () => {
@@ -17,7 +17,7 @@ const SignUp = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const { mutate, data, isPending, isSuccess, isError } = useMutation({
-    mutationFn: signUpUser,
+    mutationFn: createUser,
     onSuccess: (mutationData) => {
       if (mutationData !== undefined) {
         setToLocalStorage('user', mutationData.data);

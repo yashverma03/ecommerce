@@ -12,7 +12,7 @@ const api = axios.create({
   }
 });
 
-export const loginUser = async (body: Record<string, string>) => {
+export const getUserByEmail = async (body: Record<string, string>) => {
   try {
     const response = await api.post('login', body);
     return response?.data;
@@ -21,7 +21,7 @@ export const loginUser = async (body: Record<string, string>) => {
   }
 };
 
-export const signUpUser = async (body: Record<string, string>) => {
+export const createUser = async (body: Record<string, string>) => {
   try {
     const response = await api.post('sign-up', body);
     return response?.data;
