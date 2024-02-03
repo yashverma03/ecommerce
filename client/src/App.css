@@ -5,3 +5,59 @@
 .hide {
   @apply hidden;
 }
+
+.loading,
+.error,
+.warning,
+.success {
+  @apply text-center
+  text-[20px]
+  text-black;
+}
+
+.error {
+  @apply text-[#FF0000];
+}
+
+.warning {
+  @apply text-[#ff6700];
+}
+
+.success {
+  @apply text-[#16a916];
+}
+
+.loading-screen,
+.error-screen,
+.warning-screen {
+  @apply w-full
+  h-screen
+  flex
+  items-center
+  justify-center
+  text-[20px]
+  text-black;
+}
+
+.error-screen {
+  @apply text-[#FF0000];
+}
+
+.warning-screen {
+  @apply text-[#ff6700];
+}
+
+input,
+select,
+textarea {
+  @apply focus:outline-none;
+}
+
+option {
+  @apply bg-white;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  @apply hidden;
+}

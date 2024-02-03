@@ -1,13 +1,102 @@
 import type { Request, Response } from 'express';
 import api from '../api/thirdPartyApi.ts';
+import { getFormattedNumber } from '../utils/utils.ts';
+
+type QueryParams = {
+  search?: string;
+  category?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  sort?: `${string}-${'asc' | 'desc'}`;
+  limit?: string;
+  skip?: string;
+};
+
+type Products = Array<{
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+}>;
 
 export const getProducts = (req: Request, res: Response) => {
   const request = async () => {
     try {
-      const { query } = req;
-      const response = await api.get('products', { params: query });
+      const { search, category, minPrice, maxPrice, sort, limit, skip }: QueryParams = req.query;
+      const response = await api.get('products', { params: { limit: 100 } });
+      const products: Products = response.data.products;
+      let filteredProducts = products;
 
-      res.status(200).json({ message: 'Products found', data: response.data });
+      if (category !== undefined && category.trim() !== '') {
+        filteredProducts = filteredProducts.filter((product) => product.category === category);
+      }
+
+      if (minPrice !== undefined && minPrice.trim() !== '') {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.price >= parseInt(minPrice)
+        );
+      }
+
+      if (maxPrice !== undefined && maxPrice.trim() !== '') {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.price <= parseInt(maxPrice)
+        );
+      }
+
+      if (search !== undefined && search.trim() !== '') {
+        const searchKeyword = search.toLowerCase();
+
+        filteredProducts = filteredProducts.filter(
+          (product) =>
+            product.title.toLowerCase().includes(searchKeyword) ||
+            product.description.toLowerCase().includes(searchKeyword) ||
+            product.brand.toLowerCase().includes(searchKeyword)
+        );
+      }
+
+      if (sort !== undefined && sort.trim() !== '') {
+        const [field, order] = sort.split('-');
+
+        const sortingField =
+          field === 'price' || field === 'rating' || field === 'discountPercentage' ? field : 'id';
+
+        filteredProducts.sort((a, b) => {
+          if (order === 'asc') {
+            return a[sortingField] - b[sortingField];
+          }
+
+          if (order === 'desc') {
+            return b[sortingField] - a[sortingField];
+          }
+
+          return 0;
+        });
+      }
+
+      const total = filteredProducts.length;
+      const formattedSkip = getFormattedNumber(skip, 0);
+      const formattedLimit = getFormattedNumber(limit, total);
+
+      const startIndex = formattedSkip;
+      const endIndex = startIndex + formattedLimit;
+      const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+      res.status(200).json({
+        message: 'Products found',
+        data: {
+          products: paginatedProducts,
+          total,
+          skip: formattedSkip,
+          limit: formattedLimit
+        }
+      });
     } catch (error) {
       console.error('Products not found', error);
       res.status(500).json({ error });

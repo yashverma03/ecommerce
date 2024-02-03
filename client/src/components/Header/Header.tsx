@@ -1,15 +1,15 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './Header.module.css';
 import logo from '../../assets/logo.svg';
 import cartIcon from '../../assets/header/cartIcon.svg';
 import searchIcon from '../../assets/header/searchIcon.svg';
-import type { RootState } from '../../utils/store/store';
 import { setSearch } from '../../utils/store/reducers/search';
 import { getFromLocalStorage } from '../../utils/localStorageApi';
+import { useState } from 'react';
 
 const Header = () => {
-  const search = useSelector((state: RootState) => state.search.value);
+  const [input, setInput] = useState('');
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,10 +17,6 @@ const Header = () => {
 
   // TODO: get cart count from redux
   const cartCount = 0;
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearch(event.target.value));
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -63,10 +59,19 @@ const Header = () => {
         <input
           className={styles.input}
           placeholder='Search for products, brands and more'
-          value={search}
-          onChange={handleInputChange}
+          value={input}
+          onChange={(event) => {
+            setInput(event.target.value);
+          }}
         />
-        <img className={styles.searchIcon} src={searchIcon} alt='search' />
+        <img
+          className={styles.searchIcon}
+          src={searchIcon}
+          alt='search'
+          onClick={() => {
+            dispatch(setSearch(input));
+          }}
+        />
       </section>
 
       <Link className={styles.cart} to='/cart'>

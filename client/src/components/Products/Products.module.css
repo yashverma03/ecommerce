@@ -1,0 +1,174 @@
+.main {
+  @apply max-w-[1400px]
+  min-w-[370px]
+  w-full
+  flex
+  flex-col
+  justify-center
+  items-center
+  bg-[white]
+  px-[5%]
+  mx-auto
+  mt-[130px];
+}
+
+.section {
+  @apply w-full
+  max-w-[1000px]
+  flex
+  gap-[20px]
+  justify-between
+  items-start
+  mb-[100px];
+}
+
+.sortSelect {
+  @apply w-[200px]
+  bg-gray-100
+  rounded-xl
+  p-[10px];
+}
+
+.priceFilter {
+  @apply max-w-[370px]
+  w-full
+  flex
+  items-center
+  justify-between
+  gap-[15px];
+}
+
+.priceInput {
+  @apply w-[100px]
+  bg-gray-100
+  rounded-xl
+  p-[10px]
+  placeholder:text-gray-500;
+}
+
+.priceText {
+  @apply text-[14px];
+}
+
+.priceButton {
+  @apply w-[100px]
+  text-white
+  p-[10px]
+  rounded-[20px]
+  bg-blue-700
+  hover:bg-blue-800;
+}
+
+.categorySelect {
+  @apply w-[200px]
+  bg-gray-100
+  rounded-xl
+  p-[10px];
+}
+
+.products {
+  @apply w-full
+  grid
+  grid-cols-[repeat(auto-fill,minmax(350px,1fr))]
+  gap-x-[20px]
+  gap-y-[80px];
+}
+
+.product {
+  @apply w-full
+  rounded-[10px]
+  shadow-sm;
+}
+
+.image {
+  @apply h-[300px]
+  rounded-[10px]
+  mx-auto
+  mb-[20px]
+  transition
+  hover:scale-105;
+}
+
+.details {
+  @apply w-full
+  flex
+  flex-col
+  gap-[20px]
+  p-[10px];
+}
+
+.details1 {
+  @apply flex
+  gap-[5px]
+  justify-between;
+}
+
+.brand {
+  @apply bg-gray-300
+  p-[10px]
+  rounded-[10px];
+}
+
+.category {
+  @apply bg-gray-100
+  p-[10px]
+  rounded-[10px]
+  capitalize;
+}
+
+.details2 {
+  @apply flex
+  gap-[10px]
+  justify-between
+  items-center;
+}
+
+.title {
+  @apply text-[20px]
+  font-[700];
+}
+
+.rating {
+  @apply text-[14px];
+}
+
+.description {
+  @apply min-h-[55px]
+  text-[18px]
+  line-clamp-2;
+}
+
+.price {
+  @apply text-[18px]
+  font-[600]
+  text-blue-600;
+}
+
+.pagination {
+  @apply w-full
+  flex
+  justify-center
+  gap-[10px]
+  mt-[50px]
+  mb-[80px];
+}
+
+.page {
+  @apply text-[18px]
+  py-[10px]
+  px-[20px]
+  bg-green-100
+  rounded-[10px]
+  hover:bg-green-200;
+}
+
+.selected {
+  @apply bg-green-400;
+}
+
+@media screen and (max-width: 900px) {
+  .section {
+    @apply flex-col
+    gap-[40px];
+  }
+}

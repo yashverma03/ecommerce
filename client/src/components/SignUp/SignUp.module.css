@@ -61,7 +61,6 @@
   rounded-[10px]
   border-none
   overflow-ellipsis
-  focus:outline-none
   focus:bg-[#e2dfdf];
 }
 

@@ -20,7 +20,7 @@ const SignUp = () => {
     mutationFn: createUser,
     onSuccess: (mutationData) => {
       if (mutationData !== undefined) {
-        setToLocalStorage('user', mutationData.data);
+        setToLocalStorage('user', mutationData);
         setFormData(initialFormData);
         navigate('/');
       }

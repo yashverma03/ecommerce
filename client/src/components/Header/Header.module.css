@@ -34,8 +34,7 @@
   pr-[40px]
   text-ellipsis
   text-black
-  placeholder:text-[#696868]
-  focus:outline-none;
+  placeholder:text-[#696868];
 }
 
 .searchIcon {
@@ -45,7 +44,9 @@
   top-1/2
   bottom-auto
   right-[15px]
-  -translate-y-1/2;
+  -translate-y-1/2
+  cursor-pointer
+  hover:brightness-75;
 }
 
 .cart {
