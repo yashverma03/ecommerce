@@ -1,6 +1,5 @@
 .main {
   @apply max-w-[1400px]
-  min-w-[370px]
   w-full
   flex
   flex-col
@@ -147,6 +146,7 @@
 .pagination {
   @apply w-full
   flex
+  flex-wrap
   justify-center
   gap-[10px]
   mt-[50px]
@@ -170,5 +170,9 @@
   .section {
     @apply flex-col
     gap-[40px];
+  }
+
+  .products {
+    @apply grid-cols-[repeat(auto-fill,minmax(330px,1fr))];
   }
 }

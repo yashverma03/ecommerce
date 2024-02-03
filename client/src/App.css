@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Default styles */
+
+main {
+  @apply min-w-[350px];
+}
+
+input,
+select,
+textarea {
+  @apply focus:outline-none;
+}
+
+option {
+  @apply bg-white;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  @apply hidden;
+}
+
+/* Global styles */
+
 .hide {
   @apply hidden;
 }
@@ -45,19 +68,4 @@
 
 .warning-screen {
   @apply text-[#ff6700];
-}
-
-input,
-select,
-textarea {
-  @apply focus:outline-none;
-}
-
-option {
-  @apply bg-white;
-}
-
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-  @apply hidden;
 }

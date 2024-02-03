@@ -1,7 +1,6 @@
 .main {
   @apply fixed
   top-0
-  min-w-[375px]
   w-full
   h-[80px]
   flex
@@ -103,9 +102,13 @@
   @apply hover:underline;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 700px) {
   .main {
-    @apply gap-[15px];
+    @apply gap-[10px];
+  }
+
+  .logo {
+    @apply min-w-[30px];
   }
 
   .search {
