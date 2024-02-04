@@ -1,7 +1,7 @@
 export const getFromLocalStorage = (key: string) => {
   try {
     const data = localStorage.getItem(key);
-    const parsedData = JSON.parse(data ?? 'null');
+    const parsedData: Record<string, string> | null = JSON.parse(data ?? 'null');
     return parsedData;
   } catch (error) {
     console.error('Error in getData:', error);
