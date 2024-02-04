@@ -47,8 +47,8 @@ const Products = () => {
       <select
         className={styles.sortSelect}
         value={sort}
-        onChange={(e) => {
-          setSort(e.target.value);
+        onChange={(event) => {
+          setSort(event.target.value);
         }}
       >
         <option value='' hidden>
@@ -80,8 +80,8 @@ const Products = () => {
           value={price.minPrice}
           type='number'
           placeholder='Min'
-          onChange={(e) => {
-            setPrice({ ...price, minPrice: e.target.value });
+          onChange={(event) => {
+            setPrice({ ...price, minPrice: event.target.value });
           }}
         />
         <p className={styles.priceText}>To</p>
@@ -90,8 +90,8 @@ const Products = () => {
           value={price.maxPrice}
           type='number'
           placeholder='Max'
-          onChange={(e) => {
-            setPrice({ ...price, maxPrice: e.target.value });
+          onChange={(event) => {
+            setPrice({ ...price, maxPrice: event.target.value });
           }}
         />
         <button className={styles.priceButton} onClick={handlePriceFilter}>
@@ -106,8 +106,8 @@ const Products = () => {
       <select
         className={styles.categorySelect}
         value={category}
-        onChange={(e) => {
-          setCategory(e.target.value);
+        onChange={(event) => {
+          setCategory(event.target.value);
         }}
       >
         <option value='' hidden>

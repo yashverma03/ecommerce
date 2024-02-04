@@ -35,11 +35,6 @@ const SignUp = () => {
     mutate(formData);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
-  };
-
   const getInputs = () => {
     const inputs = [
       {
@@ -71,7 +66,9 @@ const SignUp = () => {
             placeholder={input.placeholder}
             type={input.type ?? 'text'}
             value={formData[input.id as keyof typeof formData]}
-            onChange={handleInputChange}
+            onChange={(event) => {
+              setFormData({ ...formData, [input.id]: event.target.value });
+            }}
             required
           />
         </div>
