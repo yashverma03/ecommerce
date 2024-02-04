@@ -2,12 +2,9 @@ import axios from 'axios';
 import { getFromLocalStorage } from './localStorageApi';
 
 type User = {
-  message: string;
-  data?: {
-    name: string;
-    email: string;
-    token: string;
-  };
+  name: string;
+  email: string;
+  token: string;
 };
 
 type QueryParams = {
@@ -21,30 +18,22 @@ type QueryParams = {
 };
 
 type Products = {
-  message: string;
-  data?: {
-    products: Array<{
-      id: number;
-      title: string;
-      description: string;
-      price: number;
-      discountPercentage: number;
-      rating: number;
-      stock: number;
-      brand: string;
-      category: string;
-      thumbnail: string;
-      images: string[];
-    }>;
-    total: number;
-    skip: number;
-    limit: number;
-  };
-};
-
-type Categories = {
-  message: string;
-  data?: string[];
+  products: Array<{
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    discountPercentage: number;
+    rating: number;
+    stock: number;
+    brand: string;
+    category: string;
+    thumbnail: string;
+    images: string[];
+  }>;
+  total: number;
+  skip: number;
+  limit: number;
 };
 
 const api = axios.create({
@@ -70,8 +59,9 @@ api.interceptors.request.use(
 
 export const fetchUserByEmail = async (body: Record<string, string>) => {
   try {
-    const response = await api.post<User>('login', body);
-    return response.data.data;
+    const response = await api.post('login', body);
+    const user: User = response.data?.data;
+    return user;
   } catch (error) {
     console.error('Error in logging user', error);
   }
@@ -79,8 +69,9 @@ export const fetchUserByEmail = async (body: Record<string, string>) => {
 
 export const createUser = async (body: Record<string, string>) => {
   try {
-    const response = await api.post<User>('sign-up', body);
-    return response.data.data;
+    const response = await api.post('sign-up', body);
+    const user: User = response.data?.data;
+    return user;
   } catch (error) {
     console.error('Error in signing user', error);
   }
@@ -88,8 +79,9 @@ export const createUser = async (body: Record<string, string>) => {
 
 export const fetchProducts = (params?: QueryParams) => async () => {
   try {
-    const response = await api.get<Products>('products', { params });
-    return response.data.data;
+    const response = await api.get('products', { params });
+    const products: Products = response.data?.data;
+    return products;
   } catch (error) {
     console.error('Error in getting products', error);
   }
@@ -97,8 +89,9 @@ export const fetchProducts = (params?: QueryParams) => async () => {
 
 export const fetchCategories = async () => {
   try {
-    const response = await api.get<Categories>('products/categories');
-    return response.data.data;
+    const response = await api.get('products/categories');
+    const categories: string[] = response.data?.data;
+    return categories;
   } catch (error) {
     console.error('Error in getting categories', error);
   }
