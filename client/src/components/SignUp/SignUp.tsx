@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 import styles from './SignUp.module.css';
 import { createUser } from '../../utils/api';
 import { setToLocalStorage } from '../../utils/localStorageApi';
+import { setUser } from '../../utils/store/reducers/user';
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const initialFormData = {
@@ -21,7 +24,7 @@ const SignUp = () => {
     onSuccess: (mutationData) => {
       if (mutationData !== undefined) {
         setToLocalStorage('user', mutationData);
-        setFormData(initialFormData);
+        dispatch(setUser(mutationData));
         navigate('/');
       }
     }

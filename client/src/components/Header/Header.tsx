@@ -7,6 +7,7 @@ import searchIcon from '../../assets/header/searchIcon.svg';
 import { setSearch } from '../../utils/store/reducers/search';
 import { getFromLocalStorage } from '../../utils/localStorageApi';
 import { useState } from 'react';
+import { removeUser } from '../../utils/store/reducers/user';
 
 const Header = () => {
   const [input, setInput] = useState('');
@@ -20,6 +21,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
+    dispatch(removeUser());
     navigate('/login');
   };
 

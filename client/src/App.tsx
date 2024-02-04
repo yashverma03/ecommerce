@@ -9,7 +9,7 @@ import Products from './components/Products/Products';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { store } from './utils/store/store';
-import PrivateRoute from './utils/PrivateRoute';
+import PrivateRoute from './components/utils/PrivateRoute';
 
 const App = () => {
   return (

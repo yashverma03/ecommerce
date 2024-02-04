@@ -116,14 +116,14 @@ export const verifyUser = (req: Request, res: Response) => {
           userId: decoded.userId
         });
       } else {
-        throw new Error('Token verification failed');
+        res.status(401).json({
+          message: 'User is unauthorized and invalid',
+          isUserValid: false
+        });
       }
     } catch (error) {
-      console.error('Token verification failed', error);
-      res.status(401).json({
-        isUserValid: false,
-        error
-      });
+      console.error('User is unauthorized and invalid', error);
+      res.status(401).json({ error, isUserValid: false });
     }
   };
 

@@ -77,6 +77,23 @@ export const createUser = async (body: Record<string, string>) => {
   }
 };
 
+export const verfiyUser = async () => {
+  try {
+    const user = getFromLocalStorage('user');
+
+    if (user === null) {
+      return true;
+    }
+
+    const response = await api.get('verify-user');
+    const isUserValid: boolean = response.data?.isUserValid;
+    return isUserValid;
+  } catch (error) {
+    console.error('Error in verify user', error);
+    return false;
+  }
+};
+
 export const fetchProducts = (params?: QueryParams) => async () => {
   try {
     const response = await api.get('products', { params });
