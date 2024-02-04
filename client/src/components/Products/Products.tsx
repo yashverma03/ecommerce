@@ -6,6 +6,7 @@ import { ITEMS_PER_PAGE } from '../../utils/utils';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../utils/store/store';
+import Spinner from '../utils/Spinner';
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -174,8 +175,8 @@ const Products = () => {
     ));
   };
 
-  if (productQuery.isPending) {
-    return <p className='loading-screen'>Fetching products...</p>;
+  if (productQuery.isLoading) {
+    return <Spinner />;
   }
 
   if ((productQuery.isSuccess && productQuery.data === undefined) || productQuery.isError) {
