@@ -116,10 +116,7 @@ export const verifyUser = (req: Request, res: Response) => {
           userId: decoded.userId
         });
       } else {
-        res.status(401).json({
-          message: 'User is unauthorized and invalid',
-          isUserValid: false
-        });
+        throw new Error('Id is invalid');
       }
     } catch (error) {
       console.error('User is unauthorized and invalid', error);
