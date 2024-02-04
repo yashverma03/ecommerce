@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser, getUserByEmail } from '../controller/user.ts';
+import { createUser, getUserByEmail, verifyUser } from '../controller/user.ts';
 import {
   getCategories,
   getProductById,
@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.post('/sign-up', createUser);
 router.post('/login', getUserByEmail);
+router.get('/verify-user', verifyUser);
 
 router.get('/products', getProducts);
 router.get('/product/:id', getProductById);
