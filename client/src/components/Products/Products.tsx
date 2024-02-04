@@ -31,7 +31,7 @@ const Products = () => {
   });
 
   const categoryQuery = useQuery({
-    queryKey: ['category'],
+    queryKey: ['categories'],
     queryFn: fetchCategories
   });
 
