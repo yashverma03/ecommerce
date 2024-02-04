@@ -134,12 +134,12 @@ const Products = () => {
         <img className={styles.image} src={product.thumbnail} alt='thumbnail' />
 
         <div className={styles.details}>
-          <div className={styles.details1}>
+          <div className={styles.detail1}>
             <h4 className={styles.brand}>{product.brand}</h4>
             <h5 className={styles.category}>{product.category}</h5>
           </div>
 
-          <div className={styles.details2}>
+          <div className={styles.detail2}>
             <h1 className={styles.title}>{product.title}</h1>
             <p className={styles.rating}>{product.rating}</p>
           </div>

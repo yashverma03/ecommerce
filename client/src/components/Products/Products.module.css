@@ -96,7 +96,7 @@
   p-[10px];
 }
 
-.details1 {
+.detail1 {
   @apply flex
   gap-[5px]
   justify-between;
@@ -115,7 +115,7 @@
   capitalize;
 }
 
-.details2 {
+.detail2 {
   @apply flex
   gap-[10px]
   justify-between

@@ -17,20 +17,22 @@ type QueryParams = {
   skip?: string;
 };
 
+type Product = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+};
+
 type Products = {
-  products: Array<{
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    images: string[];
-  }>;
+  products: Product[];
   total: number;
   skip: number;
   limit: number;
@@ -111,5 +113,15 @@ export const fetchCategories = async () => {
     return categories;
   } catch (error) {
     console.error('Error in getting categories', error);
+  }
+};
+
+export const fetchProductById = (id: string) => async () => {
+  try {
+    const response = await api.get(`product/${id}`);
+    const product: Product = response.data?.data;
+    return product;
+  } catch (error) {
+    console.error('Error in getting products', error);
   }
 };

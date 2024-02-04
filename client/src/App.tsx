@@ -10,6 +10,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { store } from './utils/store/store';
 import PrivateRoute from './components/utils/PrivateRoute';
+import Product from './components/Product/Product';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path='/sign-up' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Products />} />
+            <Route path='/product/:id' element={<Product />} />
 
             <Route path='/' element={<PrivateRoute />}>
               {/* TODO: List all private routes here */}
