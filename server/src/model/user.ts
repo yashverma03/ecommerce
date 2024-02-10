@@ -4,14 +4,14 @@ import sequelize from '../database/database.ts';
 
 interface UserInterface
   extends Model<InferAttributes<UserInterface>, InferCreationAttributes<UserInterface>> {
-  id: CreationOptional<number>;
+  userId: CreationOptional<number>;
   name: string;
   email: string;
   password: string;
 }
 
-const User = sequelize.define<UserInterface>('User', {
-  id: {
+const User = sequelize.define<UserInterface>('user', {
+  userId: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true

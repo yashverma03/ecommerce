@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../model/user.ts';
+import type { AuthRequest } from '../utils/types';
 
 interface UserBody {
   email: string;
@@ -36,7 +37,7 @@ export const createUser = (req: Request, res: Response) => {
         throw new Error('JWT_SECRET is not defined in environment variables');
       }
 
-      const token = jwt.sign({ userId: newUser.id }, JWT_SECRET);
+      const token = jwt.sign({ userId: newUser.userId }, JWT_SECRET);
 
       res.status(201).json({
         message: 'User created successfully',
@@ -48,7 +49,7 @@ export const createUser = (req: Request, res: Response) => {
       });
     } catch (error) {
       console.error('Error creating user', error);
-      res.status(500).json({ error });
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
 
@@ -75,7 +76,7 @@ export const getUserByEmail = (req: Request, res: Response) => {
         throw new Error('JWT_SECRET is not defined in environment variables');
       }
 
-      const token = jwt.sign({ userId: user.id }, JWT_SECRET);
+      const token = jwt.sign({ userId: user.userId }, JWT_SECRET);
 
       res.status(200).json({
         message: 'User found',
@@ -87,42 +88,22 @@ export const getUserByEmail = (req: Request, res: Response) => {
       });
     } catch (error) {
       console.error('Error getting user', error);
-      res.status(500).json({ error });
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
 
   void request();
 };
 
-export const verifyUser = (req: Request, res: Response) => {
-  const request = () => {
-    try {
-      const token = req.headers.authorization?.split(' ')[1];
-
-      if (token === undefined) {
-        return res.status(401).json({ error: 'Token not provided' });
-      }
-
-      if (JWT_SECRET === undefined) {
-        throw new Error('JWT_SECRET is not defined in environment variables');
-      }
-
-      const decoded = jwt.verify(token, JWT_SECRET);
-
-      if (typeof decoded === 'object' && 'userId' in decoded) {
-        res.status(200).json({
-          message: 'User verified successfully',
-          isUserValid: true,
-          userId: decoded.userId
-        });
-      } else {
-        throw new Error('Id is invalid');
-      }
-    } catch (error) {
-      console.error('User is unauthorized and invalid', error);
-      res.status(401).json({ error, isUserValid: false });
-    }
-  };
-
-  void request();
+export const verifyUser = (req: AuthRequest, res: Response) => {
+  try {
+    res.status(202).json({
+      message: 'User verified successfully',
+      userId: req.userId,
+      isUserValid: true
+    });
+  } catch (error) {
+    console.error('Error in verifying user', error);
+    res.status(500).json({ error: 'Internal server error', isUserValid: false });
+  }
 };

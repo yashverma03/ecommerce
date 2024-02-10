@@ -99,7 +99,7 @@ export const getProducts = (req: Request, res: Response) => {
       });
     } catch (error) {
       console.error('Products not found', error);
-      res.status(500).json({ error });
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
 
@@ -115,7 +115,7 @@ export const getProductById = (req: Request, res: Response) => {
       res.status(200).json({ message: 'Product found', data: response.data });
     } catch (error) {
       console.error('Error getting product by id', error);
-      res.status(500).json({ error });
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
 
@@ -131,7 +131,7 @@ export const getProductsByName = (req: Request, res: Response) => {
       res.status(200).json({ message: 'Products found', data: response.data });
     } catch (error) {
       console.error('Error getting products by search', error);
-      res.status(500).json({ error });
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
 
@@ -146,7 +146,7 @@ export const getCategories = (req: Request, res: Response) => {
       res.status(200).json({ message: 'Categories found', data: response.data });
     } catch (error) {
       console.error('Error getting categories', error);
-      res.status(500).json({ error });
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
 
@@ -163,7 +163,7 @@ export const getProductsByCategory = (req: Request, res: Response) => {
       res.status(200).json({ message: `Products found for ${name}`, data: response.data });
     } catch (error) {
       console.error('Error in getting products by category', error);
-      res.status(500).json({ error });
+      res.status(500).json({ error: 'Internal server error' });
     }
   };
 
