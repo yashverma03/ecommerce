@@ -1,20 +1,20 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './Header.module.css';
 import logo from '../../assets/logo.svg';
 import cartIcon from '../../assets/header/cartIcon.svg';
 import searchIcon from '../../assets/header/searchIcon.svg';
 import { setSearch } from '../../utils/store/reducers/search';
-import { getFromLocalStorage } from '../../utils/localStorageApi';
 import { useState } from 'react';
 import { removeUser } from '../../utils/store/reducers/user';
+import type { RootState } from '../../utils/store/store';
 
 const Header = () => {
   const [input, setInput] = useState('');
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const user = getFromLocalStorage('user');
+  const user = useSelector((state: RootState) => state.user);
 
   // TODO: get cart count from redux
   const cartCount = 0;
