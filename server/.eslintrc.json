@@ -28,6 +28,7 @@
     "@typescript-eslint/semi": "off",
     "multiline-ternary": "off",
     "@typescript-eslint/consistent-indexed-object-style": "off",
-    "@typescript-eslint/non-nullable-type-assertion-style": "off"
+    "@typescript-eslint/non-nullable-type-assertion-style": "off",
+    "@typescript-eslint/space-before-function-paren": "off"
   }
 }
