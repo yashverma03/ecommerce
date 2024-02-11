@@ -127,8 +127,19 @@
   font-[700];
 }
 
+.ratingWrap {
+  @apply flex
+  items-center
+  gap-[5px];
+}
+
 .rating {
   @apply text-[14px];
+}
+
+.ratingIcon {
+  @apply w-[14px]
+  h-[14px];
 }
 
 .description {

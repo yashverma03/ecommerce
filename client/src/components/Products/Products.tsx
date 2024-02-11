@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../utils/store/store';
 import Spinner from '../utils/Spinner';
+import ratingIcon from '../../assets/products/ratingIcon.svg';
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -141,7 +142,11 @@ const Products = () => {
 
           <div className={styles.detail2}>
             <h1 className={styles.title}>{product.title}</h1>
-            <p className={styles.rating}>{product.rating}</p>
+
+            <div className={styles.ratingWrap}>
+              <p className={styles.rating}>{product?.rating}</p>
+              <img className={styles.ratingIcon} src={ratingIcon} alt='rating' />
+            </div>
           </div>
 
           <h2 className={styles.description}>{product.description}</h2>
