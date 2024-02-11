@@ -89,7 +89,7 @@ export const verfiyUser = async () => {
     }
 
     const response = await api.get('verify-user');
-    const isUserValid: boolean = response.data?.isUserValid;
+    const isUserValid: boolean = response.data?.data?.isUserValid;
     return isUserValid;
   } catch (error) {
     console.error('Error in verify user', error);

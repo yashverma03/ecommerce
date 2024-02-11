@@ -45,8 +45,10 @@ export const verifyUser = (req: AuthRequest, res: Response, next: NextFunction) 
   try {
     res.status(202).json({
       message: 'User verified successfully',
-      userId: req.userId,
-      isUserValid: true
+      data: {
+        userId: req.userId,
+        isUserValid: true
+      }
     });
   } catch (error) {
     next(error);
