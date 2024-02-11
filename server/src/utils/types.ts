@@ -37,8 +37,12 @@ export type Products = Array<{
   images: string[];
 }>;
 
-export type CartBody = {
+export interface AddToCartBody {
   productId: number;
   quantity: number;
   price: number;
-};
+}
+
+export interface UpdateCartBody {
+  quantity: number;
+}

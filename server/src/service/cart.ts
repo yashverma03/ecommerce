@@ -12,7 +12,7 @@ export const addToCartService = async (
     }
 
     if (isNaN(productId) || isNaN(quantity) || quantity <= 0) {
-      return { error: 'Invalid productId or quantity', statusCode: 400 };
+      return { error: 'Invalid product id or quantity', statusCode: 400 };
     }
 
     const existingCarts = await Cart.findAll({ where: { userId } });
@@ -42,5 +42,40 @@ export const getCartItemsService = async (userId: number | undefined) => {
     return { cartItems };
   } catch (error: any) {
     throw new Error(`Error in getting cart items. ${error.message}`);
+  }
+};
+
+export const updateCartItemService = async (
+  userId: number | undefined,
+  productId: string,
+  quantity: number
+) => {
+  try {
+    if (userId === undefined) {
+      return { error: 'UserId is invalid', statusCode: 401 };
+    }
+
+    const productIdNumber = parseInt(productId);
+
+    if (isNaN(productIdNumber) || isNaN(quantity) || quantity < 0) {
+      return { error: 'Invalid product id or quantity', statusCode: 400 };
+    }
+
+    const cartItem = await Cart.findOne({ where: { userId, productId } });
+
+    if (cartItem === null) {
+      return { error: 'Cart item not found', statusCode: 404 };
+    }
+
+    if (quantity === 0) {
+      await cartItem.destroy();
+      return { message: 'Cart item removed successfully', cartItem };
+    }
+
+    cartItem.quantity = quantity;
+    const updatedCartItem = await cartItem.save();
+    return { message: 'Cart item updated successfully', cartItem: updatedCartItem };
+  } catch (error: any) {
+    throw new Error(`Error updating cart item. ${error.message}`);
   }
 };
