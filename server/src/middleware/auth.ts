@@ -26,6 +26,11 @@ export const authenticateUser = (req: AuthRequest, res: Response, next: NextFunc
     }
   } catch (error) {
     console.error('User is unauthorized and invalid', error);
-    res.status(401).json({ error: 'Unauthorized: Invalid token', isUserValid: false });
+    res.status(401).json({
+      error: 'Unauthorized: Invalid token',
+      data: {
+        isUserValid: false
+      }
+    });
   }
 };
