@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getFromLocalStorage } from './localStorageApi';
 
 type User = {
+  userId: number;
   name: string;
   email: string;
   token: string;
