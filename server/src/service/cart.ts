@@ -1,5 +1,4 @@
 import Cart from '../model/cart.ts';
-import CustomError from '../utils/CustomError.ts';
 
 export const addToCartService = async (
   userId: number | undefined,
@@ -9,11 +8,11 @@ export const addToCartService = async (
 ) => {
   try {
     if (userId === undefined) {
-      throw new CustomError('UserId is invalid', 401);
+      return { error: 'UserId is invalid', statusCode: 401 };
     }
 
     if (isNaN(productId) || isNaN(quantity) || quantity <= 0) {
-      throw new CustomError('Invalid productId or quantity', 400);
+      return { error: 'Invalid productId or quantity', statusCode: 400 };
     }
 
     const existingCarts = await Cart.findAll({ where: { userId } });
@@ -28,6 +27,6 @@ export const addToCartService = async (
     const updatedCart = await existingCart.save();
     return { message: 'Cart updated successfully', cartItem: updatedCart };
   } catch (error: any) {
-    throw new CustomError(`Error in adding to cart. ${error.message}`, error.statusCode as number);
+    throw new Error(`Error in adding to cart. ${error.message}`);
   }
 };

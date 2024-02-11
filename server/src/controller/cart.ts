@@ -7,7 +7,17 @@ export const addToCart = (req: AuthRequest, res: Response, next: NextFunction) =
     try {
       const { userId } = req;
       const { productId, quantity, price }: CartBody = req.body;
-      const { message, cartItem } = await addToCartService(userId, productId, quantity, price);
+      const { message, cartItem, statusCode, error } = await addToCartService(
+        userId,
+        productId,
+        quantity,
+        price
+      );
+
+      if (error !== undefined) {
+        return res.status(statusCode).json({ error });
+      }
+
       res.status(200).json({ message, cartItem });
     } catch (error) {
       next(error);

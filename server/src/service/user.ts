@@ -2,7 +2,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../model/user.ts';
 import type { CreateUserBody, UserBody } from '../utils/types.ts';
-import CustomError from '../utils/CustomError.ts';
 
 const { JWT_SECRET } = process.env;
 
@@ -17,7 +16,7 @@ export const createUserService = async (body: CreateUserBody) => {
     }
 
     if (existingUser !== null) {
-      throw new CustomError('Email already exists', 409);
+      return { error: 'Email already exists', statusCode: 409 };
     }
 
     const newUser = await User.create({
@@ -28,45 +27,49 @@ export const createUserService = async (body: CreateUserBody) => {
 
     const token = jwt.sign({ userId: newUser.userId }, JWT_SECRET);
 
-    return {
+    const user = {
       userId: newUser.userId,
       name: newUser.name,
       email: newUser.email,
       token
     };
+
+    return { user };
   } catch (error: any) {
-    throw new CustomError(`Error creating user. ${error.message}`, error.statusCode as number);
+    throw new Error(`Error creating user. ${error.message}`);
   }
 };
 
 export const getUserByEmailService = async (body: UserBody) => {
   try {
     const { email, password } = body;
-    const user = await User.findOne({ where: { email } });
+    const existingUser = await User.findOne({ where: { email } });
 
     if (JWT_SECRET === undefined) {
       throw new Error('JWT_SECRET is not defined in environment variables');
     }
 
-    if (user === null) {
-      throw new CustomError('User not found', 404);
+    if (existingUser === null) {
+      return { error: 'User not found', statusCode: 404 };
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
     if (!passwordMatch) {
-      throw new CustomError('Incorrect password', 401);
+      return { error: 'Incorrect password', statusCode: 401 };
     }
 
-    const token = jwt.sign({ userId: user.userId }, JWT_SECRET);
+    const token = jwt.sign({ userId: existingUser.userId }, JWT_SECRET);
 
-    return {
-      userId: user.userId,
-      name: user.name,
-      email: user.email,
+    const user = {
+      userId: existingUser.userId,
+      name: existingUser.name,
+      email: existingUser.email,
       token
     };
+
+    return { user };
   } catch (error: any) {
-    throw new CustomError(`Error getting user. ${error.message}`, error.statusCode as number);
+    throw new Error(`Error getting user. ${error.message}`);
   }
 };
