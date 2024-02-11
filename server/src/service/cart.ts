@@ -61,7 +61,7 @@ export const updateCartItemService = async (
       return { error: 'Invalid product id or quantity', statusCode: 400 };
     }
 
-    const cartItem = await Cart.findOne({ where: { userId, productId } });
+    const cartItem = await Cart.findOne({ where: { userId, productId: productIdNumber } });
 
     if (cartItem === null) {
       return { error: 'Cart item not found', statusCode: 404 };
@@ -69,7 +69,7 @@ export const updateCartItemService = async (
 
     if (quantity === 0) {
       await cartItem.destroy();
-      return { message: 'Cart item removed successfully', cartItem };
+      return { message: 'Cart item deleted successfully', cartItem };
     }
 
     cartItem.quantity = quantity;
@@ -77,5 +77,29 @@ export const updateCartItemService = async (
     return { message: 'Cart item updated successfully', cartItem: updatedCartItem };
   } catch (error: any) {
     throw new Error(`Error updating cart item. ${error.message}`);
+  }
+};
+
+export const deleteCartItemService = async (userId: number | undefined, productId: string) => {
+  try {
+    if (userId === undefined) {
+      return { error: 'UserId is invalid', statusCode: 401 };
+    }
+
+    const productIdNumber = parseInt(productId);
+
+    if (isNaN(productIdNumber)) {
+      return { error: 'Invalid productId', statusCode: 400 };
+    }
+
+    const cartsDeleted = await Cart.destroy({ where: { userId, productId: productIdNumber } });
+
+    if (cartsDeleted === 0) {
+      return { error: 'Cart item not found', statusCode: 404 };
+    }
+
+    return { cartsDeleted };
+  } catch (error: any) {
+    throw new Error(`Error deleting cart item. ${error.message}`);
   }
 };

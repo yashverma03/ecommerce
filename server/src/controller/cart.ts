@@ -1,6 +1,6 @@
 import type { NextFunction, Response } from 'express';
 import type { AuthRequest, AddToCartBody, UpdateCartBody } from '../utils/types';
-import { addToCartService, getCartItemsService, updateCartItemService } from '../service/cart.ts';
+import { addToCartService, deleteCartItemService, getCartItemsService, updateCartItemService } from '../service/cart.ts';
 
 export const addToCart = (req: AuthRequest, res: Response, next: NextFunction) => {
   const request = async () => {
@@ -69,6 +69,26 @@ export const updateCartItem = (req: AuthRequest, res: Response, next: NextFuncti
       }
 
       res.status(200).json({ message, data: { cartItem } });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  void request();
+};
+
+export const deleteCartItem = (req: AuthRequest, res: Response, next: NextFunction) => {
+  const request = async () => {
+    try {
+      const { userId } = req;
+      const { productId } = req.params;
+      const { cartsDeleted, statusCode, error } = await deleteCartItemService(userId, productId);
+
+      if (error !== undefined) {
+        return res.status(statusCode).json({ error });
+      }
+
+      res.status(200).json({ message: 'Cart item deleted successfully', data: { cartsDeleted } });
     } catch (error) {
       next(error);
     }
