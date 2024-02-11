@@ -4,7 +4,8 @@ import CustomError from '../utils/CustomError.ts';
 export const addToCartService = async (
   userId: number | undefined,
   productId: number,
-  quantity: number
+  quantity: number,
+  price: number
 ) => {
   try {
     if (userId === undefined) {
@@ -19,7 +20,7 @@ export const addToCartService = async (
     const existingCart = existingCarts.find((cart) => cart.productId === productId);
 
     if (existingCart === undefined) {
-      const newCart = await Cart.create({ userId, productId, quantity });
+      const newCart = await Cart.create({ userId, productId, quantity, price });
       return { message: 'Product added to cart successfully', cartItem: newCart };
     }
 

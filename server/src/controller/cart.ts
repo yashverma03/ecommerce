@@ -6,8 +6,8 @@ export const addToCart = (req: AuthRequest, res: Response, next: NextFunction) =
   const request = async () => {
     try {
       const { userId } = req;
-      const { productId, quantity }: CartBody = req.body;
-      const { message, cartItem } = await addToCartService(userId, productId, quantity);
+      const { productId, quantity, price }: CartBody = req.body;
+      const { message, cartItem } = await addToCartService(userId, productId, quantity, price);
       res.status(200).json({ message, cartItem });
     } catch (error) {
       next(error);

@@ -40,4 +40,5 @@ export type Products = Array<{
 export type CartBody = {
   productId: number;
   quantity: number;
+  price: number;
 };

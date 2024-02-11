@@ -9,6 +9,7 @@ interface CartInterface
   userId: number;
   productId: number;
   quantity: number;
+  price: number;
 }
 
 const Cart = sequelize.define<CartInterface>('cart', {
@@ -31,6 +32,13 @@ const Cart = sequelize.define<CartInterface>('cart', {
   },
   quantity: {
     type: DataTypes.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 0
+    }
+  },
+  price: {
+    type: DataTypes.DECIMAL,
     allowNull: false,
     validate: {
       min: 0
