@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticateUser } from '../controller/authMiddleware.ts';
+import { authenticateUser } from '../middleware/auth.ts';
 import { createUser, getUserByEmail, verifyUser } from '../controller/user.ts';
 import {
   getCategories,

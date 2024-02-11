@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import type { Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
-import sequelize from '../database/database.ts';
+import sequelize from '../config/database.ts';
 import User from './user.ts';
 
 interface CartInterface
