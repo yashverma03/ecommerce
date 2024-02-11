@@ -6,7 +6,7 @@ import { ITEMS_PER_PAGE } from '../../utils/utils';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../utils/store/store';
-import Spinner from '../utils/Spinner';
+import Spinner from '../../helpers/Spinner';
 import ratingIcon from '../../assets/products/ratingIcon.svg';
 
 const Products = () => {

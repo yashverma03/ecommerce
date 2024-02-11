@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import styles from './Product.module.css';
 import ratingIcon from '../../assets/products/ratingIcon.svg';
 import { fetchProductById } from '../../utils/api';
-import Spinner from '../utils/Spinner';
+import Spinner from '../../helpers/Spinner';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../utils/store/store';
 
@@ -36,7 +36,7 @@ const Product = () => {
 
   const handleCart = () => {
     if (user === null) {
-      navigate('/login')
+      navigate('/login');
       return;
     }
 
