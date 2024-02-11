@@ -1,6 +1,6 @@
 import type { NextFunction, Response } from 'express';
 import type { AuthRequest, CartBody } from '../utils/types';
-import { addToCartService } from '../service/cart.ts';
+import { addToCartService, getCartItemsService } from '../service/cart.ts';
 
 export const addToCart = (req: AuthRequest, res: Response, next: NextFunction) => {
   const request = async () => {
@@ -18,7 +18,32 @@ export const addToCart = (req: AuthRequest, res: Response, next: NextFunction) =
         return res.status(statusCode).json({ error });
       }
 
-      res.status(200).json({ message, cartItem });
+      res.status(200).json({ message, data: cartItem });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  void request();
+};
+
+export const getCartItems = (req: AuthRequest, res: Response, next: NextFunction) => {
+  const request = async () => {
+    try {
+      const { userId } = req;
+      const { cartItems, statusCode, error } = await getCartItemsService(userId);
+
+      if (error !== undefined) {
+        return res.status(statusCode).json({ error });
+      }
+
+      res.status(200).json({
+        message: 'Cart items found',
+        data: {
+          cartItems,
+          total: cartItems.length
+        }
+      });
     } catch (error) {
       next(error);
     }

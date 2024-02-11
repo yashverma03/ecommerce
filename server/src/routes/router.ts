@@ -8,7 +8,7 @@ import {
   getProductsByCategory,
   getProductsByName
 } from '../controller/product.ts';
-import { addToCart } from '../controller/cart.ts';
+import { addToCart, getCartItems } from '../controller/cart.ts';
 
 const router = express.Router();
 
@@ -23,10 +23,8 @@ router.get('/products/categories', getCategories);
 router.get('/products/category/:name', getProductsByCategory);
 
 router.post('/cart', authenticateUser, addToCart);
-
-// TODO
-// router.get('/cart/:userId', getCartItems);
-// router.patch('/cart/:userId', updateCartItem);
-// router.delete('/cart/:userId', removeCartItem);
+router.get('/cart', authenticateUser, getCartItems);
+// router.patch('/cart/:userId', authenticateUser, updateCartItem);
+// router.delete('/cart/:userId', authenticateUser, removeCartItem);
 
 export default router;

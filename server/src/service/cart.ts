@@ -24,9 +24,23 @@ export const addToCartService = async (
     }
 
     existingCart.quantity = quantity;
+    existingCart.price = price;
     const updatedCart = await existingCart.save();
     return { message: 'Cart updated successfully', cartItem: updatedCart };
   } catch (error: any) {
     throw new Error(`Error in adding to cart. ${error.message}`);
+  }
+};
+
+export const getCartItemsService = async (userId: number | undefined) => {
+  try {
+    if (userId === undefined) {
+      return { error: 'UserId is invalid', statusCode: 401 };
+    }
+
+    const cartItems = await Cart.findAll({ where: { userId } });
+    return { cartItems };
+  } catch (error: any) {
+    throw new Error(`Error in getting cart items. ${error.message}`);
   }
 };

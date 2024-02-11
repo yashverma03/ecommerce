@@ -38,7 +38,7 @@ const Cart = sequelize.define<CartInterface>('cart', {
     }
   },
   price: {
-    type: DataTypes.DECIMAL,
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
     validate: {
       min: 0
