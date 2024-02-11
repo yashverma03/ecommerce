@@ -42,7 +42,8 @@
 .mainImage {
   @apply min-w-full
   h-[400px]
-  rounded-[10px];
+  rounded-[10px]
+  object-cover;
 }
 
 .button {

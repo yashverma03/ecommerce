@@ -1,13 +1,17 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import styles from './Product.module.css';
 import ratingIcon from '../../assets/products/ratingIcon.svg';
 import { fetchProductById } from '../../utils/api';
 import Spinner from '../utils/Spinner';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../utils/store/store';
 
 const Product = () => {
+  const navigate = useNavigate();
   const { id = '' } = useParams();
+  const user = useSelector((state: RootState) => state.user);
 
   const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey: ['product', id],
@@ -31,7 +35,12 @@ const Product = () => {
   };
 
   const handleCart = () => {
-    // TODO
+    if (user === null) {
+      navigate('/login')
+      return;
+    }
+
+    // TODO: Add API
   };
 
   if (isLoading) {
@@ -50,7 +59,7 @@ const Product = () => {
         <div className={styles.imageWrap}>
           <img className={styles.mainImage} src={data?.images[currentImage]} alt='product image' />
           <button className={styles.button} onClick={handleCart}>
-            Add to cart
+            {user !== null ? 'Add to cart' : 'Login to add to cart'}
           </button>
         </div>
       </section>
