@@ -1,4 +1,5 @@
 import Cart from '../model/cart.ts';
+import { getProductByIdService } from './product.ts';
 
 export const addToCartService = async (
   userId: number | undefined,
@@ -39,7 +40,16 @@ export const getCartItemsService = async (userId: number | undefined) => {
     }
 
     const cartItems = await Cart.findAll({ where: { userId } });
-    return { cartItems };
+
+    const cartItemsWithProducts = await Promise.all(
+      cartItems.map(async (cartItem) => {
+        const productId = cartItem.productId;
+        const productDetails = await getProductByIdService(productId.toString());
+        return { ...cartItem.toJSON(), productDetails };
+      })
+    );
+
+    return { cartItems: cartItemsWithProducts };
   } catch (error: any) {
     throw new Error(`Error in getting cart items. ${error.message}`);
   }
