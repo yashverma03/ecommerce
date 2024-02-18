@@ -46,7 +46,7 @@ const Product = () => {
       return;
     }
 
-    if (data === undefined) {
+    if (data === undefined || data === null) {
       return;
     }
 
@@ -58,7 +58,7 @@ const Product = () => {
       return <p className={`loading ${styles.message}`}>Adding to cart...</p>;
     }
 
-    if (mutation.isError || (mutation.isSuccess && mutation.data === undefined)) {
+    if (mutation.isError || (mutation.isSuccess && mutation.data === null)) {
       return <p className={`error ${styles.message}`}>Some error occured</p>;
     }
 
@@ -71,7 +71,7 @@ const Product = () => {
     return <Spinner />;
   }
 
-  if ((isSuccess && data === undefined) || isError) {
+  if ((isSuccess && data === null) || isError) {
     return <p className='error-screen'>Some error occured</p>;
   }
 

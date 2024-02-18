@@ -120,20 +120,22 @@ api.interceptors.request.use(
 export const fetchUserByEmail = async (body: FetchUserBody) => {
   try {
     const response = await api.post<BaseResponse<User>>('login', body);
-    const user = response.data.data;
+    const user = response.data.data ?? null;
     return user;
   } catch (error) {
     console.error('Error in logging user:', error);
+    return null;
   }
 };
 
 export const createUser = async (body: CreateUserBody) => {
   try {
     const response = await api.post<BaseResponse<User>>('sign-up', body);
-    const user = response.data.data;
+    const user = response.data.data ?? null;
     return user;
   } catch (error) {
     console.error('Error in signing user:', error);
+    return null;
   }
 };
 
@@ -146,7 +148,7 @@ export const verfiyUser = async () => {
     }
 
     const response = await api.get<BaseResponse<VerfiyUser>>('verify-user');
-    const isUserValid = response.data.data?.isUserValid;
+    const isUserValid = response.data.data?.isUserValid ?? false;
     return isUserValid;
   } catch (error) {
     console.error('Error in verify user:', error);
@@ -157,30 +159,33 @@ export const verfiyUser = async () => {
 export const fetchProducts = (params?: QueryParams) => async () => {
   try {
     const response = await api.get<BaseResponse<Products>>('products', { params });
-    const products = response.data.data;
+    const products = response.data.data ?? null;
     return products;
   } catch (error) {
     console.error('Error in getting products:', error);
+    return null;
   }
 };
 
 export const fetchCategories = async () => {
   try {
     const response = await api.get<BaseResponse<Categories>>('products/categories');
-    const categories = response.data.data;
+    const categories = response.data.data ?? null;
     return categories;
   } catch (error) {
     console.error('Error in getting categories:', error);
+    return null;
   }
 };
 
 export const fetchProductById = (id: string) => async () => {
   try {
     const response = await api.get<BaseResponse<Product>>(`product/${id}`);
-    const product = response.data.data;
+    const product = response.data.data ?? null;
     return product;
   } catch (error) {
     console.error('Error in getting products:', error);
+    return null;
   }
 };
 
@@ -193,20 +198,22 @@ export const addToCart = async (cartItem: AddToCartBody) => {
     };
 
     const response = await api.post<BaseResponse<CartModel>>('cart', body);
-    const cart = response.data.data;
+    const cart = response.data.data ?? null;
     return cart;
   } catch (error) {
     console.error('Error in adding to cart:', error);
+    return null;
   }
 };
 
 export const fetchCartItems = async () => {
   try {
     const response = await api.get<BaseResponse<CartItems>>('cart');
-    const cartItems = response.data.data?.cartItems;
+    const cartItems = response.data.data?.cartItems ?? null;
     return cartItems;
   } catch (error) {
     console.error('Error in getting cart items:', error);
+    return null;
   }
 };
 
@@ -219,19 +226,21 @@ export const updateCartItem = async (cartItems: UpdateCartItemBody) => {
     };
 
     const response = await api.patch<BaseResponse<CartModel>>(`cart/${productId}`, body);
-    const cartItemsDetails = response.data.data;
+    const cartItemsDetails = response.data.data ?? null;
     return cartItemsDetails;
   } catch (error) {
     console.error('Error in updating cart items:', error);
+    return null;
   }
 };
 
 export const deleteCartItem = async (productId: number) => {
   try {
     const response = await api.delete<BaseResponse<DeleteCartItem>>(`cart/${productId}`);
-    const cartsDeleted = response.data.data;
+    const cartsDeleted = response.data.data ?? null;
     return cartsDeleted;
   } catch (error) {
     console.error('Error in deleting cart items:', error);
+    return null;
   }
 };

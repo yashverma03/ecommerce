@@ -184,7 +184,7 @@ const Products = () => {
     return <Spinner />;
   }
 
-  if ((productQuery.isSuccess && productQuery.data === undefined) || productQuery.isError) {
+  if ((productQuery.isSuccess && productQuery.data === null) || productQuery.isError) {
     return <p className='error-screen'>Some error occured</p>;
   }
 

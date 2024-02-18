@@ -21,7 +21,7 @@ const Login = () => {
   const { mutate, data, isPending, isSuccess, isError } = useMutation({
     mutationFn: fetchUserByEmail,
     onSuccess: (mutationData) => {
-      if (mutationData !== undefined) {
+      if (mutationData !== undefined && mutationData !== null) {
         setToLocalStorage('user', mutationData);
         dispatch(setUser(mutationData));
         navigate('/');
@@ -74,7 +74,7 @@ const Login = () => {
 
   const getError = () => {
     return (
-      ((isSuccess && data === undefined) || isError) && (
+      ((isSuccess && data === null) || isError) && (
         <p className={styles.error}>Error in logging</p>
       )
     );
