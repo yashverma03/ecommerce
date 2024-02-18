@@ -13,7 +13,7 @@ export interface CreateUserBody extends UserBody {
   name: string;
 }
 
-export type QueryParams = {
+export interface QueryParams {
   search?: string;
   category?: string;
   minPrice?: string;

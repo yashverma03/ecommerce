@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { getFromLocalStorage } from '../../localStorageApi';
 
-type User = {
+interface User {
   userId?: number;
   name?: string;
   email?: string;
   token?: string;
-};
+}
 
 const savedUser = getFromLocalStorage('user');
 

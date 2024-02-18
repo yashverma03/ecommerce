@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { getFromLocalStorage } from './localStorageApi';
 
-type User = {
+interface User {
   userId: number;
   name: string;
   email: string;
   token: string;
-};
+}
 
-type QueryParams = {
+interface QueryParams {
   search?: string;
   category?: string;
   minPrice?: string;
@@ -16,9 +16,9 @@ type QueryParams = {
   sort?: string;
   limit?: string;
   skip?: string;
-};
+}
 
-type Product = {
+interface Product {
   id: number;
   title: string;
   description: string;
@@ -30,14 +30,14 @@ type Product = {
   category: string;
   thumbnail: string;
   images: string[];
-};
+}
 
-type Products = {
+interface Products {
   products: Product[];
   total: number;
   skip: number;
   limit: number;
-};
+}
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
