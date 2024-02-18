@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getFromLocalStorage } from './localStorageApi';
+import { getFromLocalStorage } from '../utils/localStorage';
 
 interface BaseResponse<T> {
   message?: string;

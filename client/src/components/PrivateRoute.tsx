@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
-import { verfiyUser } from '../utils/api';
-import { removeUser } from '../utils/store/reducers/user';
+import { verfiyUser } from '../services/api';
+import { removeUser } from '../store/reducers/user';
 
 const PrivateRoute = () => {
   const dispatch = useDispatch();

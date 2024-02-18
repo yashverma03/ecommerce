@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import styles from './Cart.module.css';
 import minusIcon from '../../assets/cart/minusIcon.svg';
 import plusIcon from '../../assets/cart/plusIcon.svg';
-import { deleteCartItem, fetchCartItems, updateCartItem } from '../../utils/api';
+import { deleteCartItem, fetchCartItems, updateCartItem } from '../../services/api';
 
 const Cart = () => {
   const query = useQuery({

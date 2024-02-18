@@ -4,10 +4,10 @@ import styles from './Header.module.css';
 import logo from '../../assets/logo.svg';
 import cartIcon from '../../assets/header/cartIcon.svg';
 import searchIcon from '../../assets/header/searchIcon.svg';
-import { setSearch } from '../../utils/store/reducers/search';
+import { setSearch } from '../../store/reducers/search';
 import { useState } from 'react';
-import { removeUser } from '../../utils/store/reducers/user';
-import type { RootState } from '../../utils/store/store';
+import { removeUser } from '../../store/reducers/user';
+import type { RootState } from '../../store/store';
 
 const Header = () => {
   const [input, setInput] = useState('');

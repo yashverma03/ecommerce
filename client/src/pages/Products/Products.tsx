@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
 import styles from './Products.module.css';
-import { fetchCategories, fetchProducts } from '../../utils/api';
+import { fetchCategories, fetchProducts } from '../../services/api';
 import { ITEMS_PER_PAGE } from '../../utils/utils';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../utils/store/store';
-import Spinner from '../../helpers/Spinner';
+import Spinner from '../../components/Spinner';
+import type { RootState } from '../../store/store';
 import ratingIcon from '../../assets/products/ratingIcon.svg';
 
 const Products = () => {

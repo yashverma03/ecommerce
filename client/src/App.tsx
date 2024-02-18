@@ -2,16 +2,16 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './App.css';
-import queryClient from './utils/queryClient';
-import SignUp from './components/SignUp/SignUp';
-import Login from './components/Login/Login';
-import Products from './components/Products/Products';
-import Header from './helpers/Header/Header';
-import Footer from './helpers/Footer/Footer';
-import { store } from './utils/store/store';
-import PrivateRoute from './helpers/PrivateRoute';
-import Product from './components/Product/Product';
-import Cart from './components/Cart/Cart';
+import queryClient from './config/queryClient';
+import SignUp from './pages/SignUp/SignUp';
+import Login from './pages/Login/Login';
+import Products from './pages/Products/Products';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import { store } from './store/store';
+import PrivateRoute from './components/PrivateRoute';
+import Product from './pages/Product/Product';
+import Cart from './pages/Cart/Cart';
 
 const App = () => {
   return (

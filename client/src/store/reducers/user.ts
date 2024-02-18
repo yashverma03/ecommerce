@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { getFromLocalStorage } from '../../localStorageApi';
+import { getFromLocalStorage } from '../../utils/localStorage';
 
 interface User {
   userId?: number;

@@ -3,11 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import styles from './Product.module.css';
 import ratingIcon from '../../assets/products/ratingIcon.svg';
-import { addToCart, fetchProductById } from '../../utils/api';
-import Spinner from '../../helpers/Spinner';
+import { addToCart, fetchProductById } from '../../services/api';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../utils/store/store';
-import useFeedback from '../../helpers/hooks/useFeedback';
+import type { RootState } from '../../store/store';
+import useFeedback from '../../components/hooks/useFeedback';
+import Spinner from '../../components/Spinner';
 
 const Product = () => {
   const navigate = useNavigate();

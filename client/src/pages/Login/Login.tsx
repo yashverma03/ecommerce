@@ -2,17 +2,16 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
-import styles from './SignUp.module.css';
-import { createUser } from '../../utils/api';
-import { setToLocalStorage } from '../../utils/localStorageApi';
-import { setUser } from '../../utils/store/reducers/user';
+import styles from './Login.module.css';
+import { fetchUserByEmail } from '../../services/api';
+import { setToLocalStorage } from '../../utils/localStorage';
+import { setUser } from '../../store/reducers/user';
 
-const SignUp = () => {
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const initialFormData = {
-    name: '',
     email: '',
     password: ''
   };
@@ -20,7 +19,7 @@ const SignUp = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const { mutate, data, isPending, isSuccess, isError } = useMutation({
-    mutationFn: createUser,
+    mutationFn: fetchUserByEmail,
     onSuccess: (mutationData) => {
       if (mutationData !== undefined) {
         setToLocalStorage('user', mutationData);
@@ -38,11 +37,6 @@ const SignUp = () => {
   const getInputs = () => {
     const inputs = [
       {
-        id: 'name',
-        label: 'Full Name',
-        placeholder: 'Your name'
-      },
-      {
         id: 'email',
         label: 'Email',
         placeholder: 'Your email',
@@ -51,7 +45,7 @@ const SignUp = () => {
       {
         id: 'password',
         label: 'Password',
-        placeholder: 'Create a password',
+        placeholder: 'Your password',
         type: 'password'
       }
     ];
@@ -76,12 +70,12 @@ const SignUp = () => {
     });
   };
 
-  const buttonText = isPending ? 'Creating your account...' : 'Sign Up';
+  const buttonText = isPending ? 'Logging you in...' : 'Login';
 
   const getError = () => {
     return (
       ((isSuccess && data === undefined) || isError) && (
-        <p className={styles.error}>Error in creating account</p>
+        <p className={styles.error}>Error in logging</p>
       )
     );
   };
@@ -89,7 +83,7 @@ const SignUp = () => {
   return (
     <main className={styles.background}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Create your account</h1>
+        <h1 className={styles.title}>Login your account</h1>
 
         <form className={styles.form} onSubmit={handleSubmit}>
           {getInputs()}
@@ -98,9 +92,9 @@ const SignUp = () => {
         </form>
 
         <h2 className={styles.subtitle}>
-          Already have an account?{' '}
-          <Link className={styles.link} to='/login'>
-            Sign In
+          Don't have an account?{' '}
+          <Link className={styles.link} to='/sign-up'>
+            Sign Up
           </Link>
         </h2>
       </div>
@@ -108,4 +102,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
