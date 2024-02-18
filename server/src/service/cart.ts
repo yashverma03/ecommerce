@@ -23,7 +23,7 @@ export const addToCartService = async (
       return { message: 'Product added to cart successfully', cartItem: newCart };
     }
 
-    existingCart.quantity = quantity;
+    existingCart.quantity += quantity;
     existingCart.price = price;
     const updatedCart = await existingCart.save();
     return { message: 'Cart updated successfully', cartItem: updatedCart };
