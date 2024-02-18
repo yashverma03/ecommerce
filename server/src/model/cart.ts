@@ -3,8 +3,8 @@ import type { Model, InferAttributes, InferCreationAttributes, CreationOptional 
 import sequelize from '../config/database.ts';
 import User from './user.ts';
 
-interface CartInterface
-  extends Model<InferAttributes<CartInterface>, InferCreationAttributes<CartInterface>> {
+interface CartModel
+  extends Model<InferAttributes<CartModel>, InferCreationAttributes<CartModel>> {
   cartId: CreationOptional<number>;
   userId: number;
   productId: number;
@@ -12,7 +12,7 @@ interface CartInterface
   price: number;
 }
 
-const Cart = sequelize.define<CartInterface>('cart', {
+const Cart = sequelize.define<CartModel>('cart', {
   cartId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
