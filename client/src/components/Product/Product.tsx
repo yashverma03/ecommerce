@@ -78,7 +78,7 @@ const Product = () => {
   return (
     <main className={styles.main}>
       <section className={styles.imageSection}>
-        <div className={styles.images}>{getImages()}</div>
+        <figure className={styles.images}>{getImages()}</figure>
 
         <div className={styles.imageWrap}>
           <img className={styles.mainImage} src={data?.images[currentImage]} alt='product image' />
@@ -92,7 +92,7 @@ const Product = () => {
       <section className={styles.details}>
         <div className={styles.detail1}>
           <h3 className={styles.brand}>{data?.brand}</h3>
-          <h5 className={styles.category}>{data?.category}</h5>
+          <p className={styles.category}>{data?.category}</p>
         </div>
 
         <div className={styles.detail2}>
@@ -106,7 +106,7 @@ const Product = () => {
         <h2 className={styles.description}>{data?.description}</h2>
 
         <div className={styles.detail3}>
-          <h4 className={styles.price}>₹{data?.price}</h4>
+          <p className={styles.price}>₹{data?.price}</p>
           <p className={styles.discount}>{data?.discountPercentage}% off</p>
         </div>
       </section>

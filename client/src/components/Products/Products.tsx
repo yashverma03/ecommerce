@@ -75,7 +75,7 @@ const Products = () => {
 
   const getPriceFilter = () => {
     return (
-      <div className={styles.priceFilter}>
+      <article className={styles.priceFilter}>
         <input
           className={styles.priceInput}
           value={price.minPrice}
@@ -98,7 +98,7 @@ const Products = () => {
         <button className={styles.priceButton} onClick={handlePriceFilter}>
           Search
         </button>
-      </div>
+      </article>
     );
   };
 
@@ -200,7 +200,7 @@ const Products = () => {
         {getCategories()}
       </section>
       <section className={styles.products}>{getProducts()}</section>
-      <section className={styles.pagination}>{getPagination()}</section>
+      <div className={styles.pagination}>{getPagination()}</div>
     </main>
   );
 };

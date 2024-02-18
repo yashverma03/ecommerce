@@ -52,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <main className={getClassName()}>
+    <header className={getClassName()}>
       <Link to='/'>
         <img className={styles.logo} src={logo} alt='logo' />
       </Link>
@@ -62,17 +62,13 @@ const Header = () => {
           className={styles.input}
           placeholder='Search for products, brands and more'
           value={input}
-          onChange={(event) => {
-            setInput(event.target.value);
-          }}
+          onChange={(event) => setInput(event.target.value)}
         />
         <img
           className={styles.searchIcon}
           src={searchIcon}
           alt='search'
-          onClick={() => {
-            dispatch(setSearch(input));
-          }}
+          onClick={() => dispatch(setSearch(input))}
         />
       </section>
 
@@ -82,7 +78,7 @@ const Header = () => {
       </Link>
 
       {getButtons()}
-    </main>
+    </header>
   );
 };
 

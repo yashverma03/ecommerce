@@ -41,22 +41,22 @@ const Footer = () => {
   };
 
   return (
-    <main className={getClassName()}>
+    <footer className={getClassName()}>
       <section className={styles.logoWrap}>
         <img className={styles.logo} src={logo} alt='logo' />
         <h2 className={styles.copyright}>© Ecommerce 2024, all rights reserved</h2>
       </section>
 
-      <section className={styles.links}>
+      <nav className={styles.links}>
         <h1 className={styles.heading}>About</h1>
         {getLinks()}
-      </section>
+      </nav>
 
-      <section className={styles.socialMedias}>
+      <nav className={styles.socialMedias}>
         <h1 className={styles.heading}>Social Media</h1>
         {getSocialMedias()}
-      </section>
-    </main>
+      </nav>
+    </footer>
   );
 };
 
