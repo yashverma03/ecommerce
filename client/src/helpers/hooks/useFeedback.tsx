@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 /**
  * A custom React hook to manage feedback visibility based on a timer.
- * @param {boolean} dependency - The dependency that triggers the timer reset.
+ * @param {unknown[]} dependencies - The dependencies that trigger the timer reset.
  * @param {number} duration - The duration in milliseconds for which the feedback message should be visible. Default is 3000ms.
  * @returns {boolean} isVisible - A boolean indicating the visibility of the feedback message.
  */
-const useFeedback = (dependency: boolean, duration = 3000) => {
+const useFeedback = (dependencies: unknown[], duration = 3000) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const useFeedback = (dependency: boolean, duration = 3000) => {
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [dependency]);
+  }, dependencies);
 
   return isVisible;
 };

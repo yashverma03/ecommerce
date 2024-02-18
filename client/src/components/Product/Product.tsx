@@ -24,7 +24,7 @@ const Product = () => {
     mutationFn: addToCart
   });
 
-  const isVisible = useFeedback(mutation.isSuccess);
+  const isVisible = useFeedback([mutation.isSuccess]);
 
   const getImages = () => {
     return data?.images.map((image, index) => (
