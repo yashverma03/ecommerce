@@ -56,6 +56,11 @@
   hover:scale-125;
 }
 
+.message {
+  @apply text-[14px]
+  mt-[-10px];
+}
+
 .details {
   @apply w-[80%]
   flex

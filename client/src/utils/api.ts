@@ -62,6 +62,20 @@ interface Products {
 
 type Categories = string[];
 
+interface AddToCartBody {
+  productId: number;
+  price: number;
+  quantity?: number;
+}
+
+interface CartItem {
+  cartId: number;
+  userId: number;
+  productId: number;
+  quantity: number;
+  price: number;
+}
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
@@ -147,5 +161,21 @@ export const fetchProductById = (id: string) => async () => {
     return product;
   } catch (error) {
     console.error('Error in getting products', error);
+  }
+};
+
+export const addToCart = async (cartItem: AddToCartBody) => {
+  try {
+    const body = {
+      productId: cartItem.productId,
+      price: cartItem.price,
+      quantity: cartItem.quantity ?? 1
+    };
+
+    const response = await api.post<BaseResponse<CartItem>>('cart', body);
+    const cart = response.data.data;
+    return cart;
+  } catch (error) {
+    console.error('Error in adding to cart:', error);
   }
 };

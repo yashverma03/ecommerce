@@ -37,7 +37,11 @@
         "react/react-in-jsx-scope": "off",
         "multiline-ternary": "off",
         "react/no-unescaped-entities": "off",
-        "no-console": ["warn", { "allow": ["error"] }]
+        "no-console": ["warn", { "allow": ["error"] }],
+        "@typescript-eslint/no-confusing-void-expression": [
+          "error",
+          { "ignoreArrowShorthand": true }
+        ]
       }
     }
   ],

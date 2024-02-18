@@ -1,24 +1,30 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import styles from './Product.module.css';
 import ratingIcon from '../../assets/products/ratingIcon.svg';
-import { fetchProductById } from '../../utils/api';
+import { addToCart, fetchProductById } from '../../utils/api';
 import Spinner from '../../helpers/Spinner';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../utils/store/store';
+import useFeedback from '../../helpers/hooks/useFeedback';
 
 const Product = () => {
   const navigate = useNavigate();
   const { id = '' } = useParams();
   const user = useSelector((state: RootState) => state.user);
+  const [currentImage, setCurrentImage] = useState(0);
 
   const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey: ['product', id],
     queryFn: fetchProductById(id)
   });
 
-  const [currentImage, setCurrentImage] = useState(0);
+  const mutation = useMutation({
+    mutationFn: addToCart
+  });
+
+  const isVisible = useFeedback(mutation.isSuccess);
 
   const getImages = () => {
     return data?.images.map((image, index) => (
@@ -40,7 +46,25 @@ const Product = () => {
       return;
     }
 
-    // TODO: Add API
+    if (data === undefined) {
+      return;
+    }
+
+    mutation.mutate({ productId: data.id, price: data.price });
+  };
+
+  const getMessage = () => {
+    if (mutation.isPending) {
+      return <p className={`loading ${styles.message}`}>Adding to cart...</p>;
+    }
+
+    if (mutation.isError || (mutation.isSuccess && mutation.data === undefined)) {
+      return <p className={`error ${styles.message}`}>Some error occured</p>;
+    }
+
+    if (mutation.data !== undefined) {
+      return <p className={`success ${styles.message}`}>Added to cart successfully</p>;
+    }
   };
 
   if (isLoading) {
@@ -61,6 +85,7 @@ const Product = () => {
           <button className={styles.button} onClick={handleCart}>
             {user !== null ? 'Add to cart' : 'Login to add to cart'}
           </button>
+          {isVisible && getMessage()}
         </div>
       </section>
 
