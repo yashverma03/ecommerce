@@ -5,6 +5,7 @@ interface BaseResponse<T> {
   message?: string;
   data?: T;
   error?: string;
+  stack?: any;
   [key: string]: any;
 }
 
@@ -68,12 +69,31 @@ interface AddToCartBody {
   quantity?: number;
 }
 
-interface CartItem {
+interface CartModel {
   cartId: number;
   userId: number;
   productId: number;
   quantity: number;
   price: number;
+}
+
+interface CartItem extends CartModel {
+  productDetails: Product;
+}
+
+interface CartItems {
+  cartItems: CartItem[];
+  total: number;
+}
+
+interface UpdateCartItemBody {
+  productId: number;
+  price: number;
+  quantity: number;
+}
+
+interface DeleteCartItem {
+  cartsDeleted: number;
 }
 
 const api = axios.create({
@@ -103,7 +123,7 @@ export const fetchUserByEmail = async (body: FetchUserBody) => {
     const user = response.data.data;
     return user;
   } catch (error) {
-    console.error('Error in logging user', error);
+    console.error('Error in logging user:', error);
   }
 };
 
@@ -113,7 +133,7 @@ export const createUser = async (body: CreateUserBody) => {
     const user = response.data.data;
     return user;
   } catch (error) {
-    console.error('Error in signing user', error);
+    console.error('Error in signing user:', error);
   }
 };
 
@@ -129,7 +149,7 @@ export const verfiyUser = async () => {
     const isUserValid = response.data.data?.isUserValid;
     return isUserValid;
   } catch (error) {
-    console.error('Error in verify user', error);
+    console.error('Error in verify user:', error);
     return false;
   }
 };
@@ -140,7 +160,7 @@ export const fetchProducts = (params?: QueryParams) => async () => {
     const products = response.data.data;
     return products;
   } catch (error) {
-    console.error('Error in getting products', error);
+    console.error('Error in getting products:', error);
   }
 };
 
@@ -150,7 +170,7 @@ export const fetchCategories = async () => {
     const categories = response.data.data;
     return categories;
   } catch (error) {
-    console.error('Error in getting categories', error);
+    console.error('Error in getting categories:', error);
   }
 };
 
@@ -160,7 +180,7 @@ export const fetchProductById = (id: string) => async () => {
     const product = response.data.data;
     return product;
   } catch (error) {
-    console.error('Error in getting products', error);
+    console.error('Error in getting products:', error);
   }
 };
 
@@ -172,10 +192,46 @@ export const addToCart = async (cartItem: AddToCartBody) => {
       quantity: cartItem.quantity ?? 1
     };
 
-    const response = await api.post<BaseResponse<CartItem>>('cart', body);
+    const response = await api.post<BaseResponse<CartModel>>('cart', body);
     const cart = response.data.data;
     return cart;
   } catch (error) {
     console.error('Error in adding to cart:', error);
+  }
+};
+
+export const fetchCartItems = async () => {
+  try {
+    const response = await api.get<BaseResponse<CartItems>>('cart');
+    const cartItems = response.data.data?.cartItems;
+    return cartItems;
+  } catch (error) {
+    console.error('Error in getting cart items:', error);
+  }
+};
+
+export const updateCartItem = async (cartItems: UpdateCartItemBody) => {
+  try {
+    const { productId, price, quantity } = cartItems;
+    const body = {
+      price,
+      quantity
+    };
+
+    const response = await api.patch<BaseResponse<CartModel>>(`cart/${productId}`, body);
+    const cartItemsDetails = response.data.data;
+    return cartItemsDetails;
+  } catch (error) {
+    console.error('Error in updating cart items:', error);
+  }
+};
+
+export const deleteCartItem = async (productId: number) => {
+  try {
+    const response = await api.delete<BaseResponse<DeleteCartItem>>(`cart/${productId}`);
+    const cartsDeleted = response.data.data;
+    return cartsDeleted;
+  } catch (error) {
+    console.error('Error in deleting cart items:', error);
   }
 };
