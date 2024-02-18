@@ -16,9 +16,6 @@ const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
 
-  // TODO: get cart count from redux
-  const cartCount = 0;
-
   const handleLogout = () => {
     localStorage.removeItem('user');
     dispatch(removeUser());
@@ -29,9 +26,6 @@ const Header = () => {
     return user !== null ? (
       <section className={styles.userWrap}>
         <h1 className={styles.user}>{user?.name}</h1>
-        <Link className={styles.profile} to='/profile'>
-          Profile
-        </Link>
         <button className={styles.button} onClick={handleLogout}>
           Logout
         </button>
@@ -72,9 +66,8 @@ const Header = () => {
         />
       </section>
 
-      <Link className={styles.cart} to='/cart'>
+      <Link to='/cart'>
         <img className={styles.cartIcon} src={cartIcon} alt='cart' />
-        <p className={styles.cartCount}>{cartCount}</p>
       </Link>
 
       {getButtons()}

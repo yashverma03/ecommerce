@@ -48,21 +48,9 @@
   hover:brightness-75;
 }
 
-.cart {
-  @apply flex
-  items-center
-  gap-[15px]
-  mr-[10px];
-}
-
 .cartIcon {
   @apply min-w-[25px]
   min-h-[25px];
-}
-
-.cartCount {
-  @apply text-[18px]
-  font-[500];
 }
 
 .userWrap,
@@ -86,7 +74,6 @@
   text-ellipsis;
 }
 
-.profile,
 .signUp {
   @apply text-[18px]
   font-[700]
@@ -113,11 +100,6 @@
 
   .search {
     @apply max-w-[300px];
-  }
-
-  .cart {
-    @apply flex-col-reverse
-    gap-[5px];
   }
 
   .userWrap {
