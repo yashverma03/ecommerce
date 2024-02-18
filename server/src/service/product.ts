@@ -1,4 +1,4 @@
-import api from '../config/thirdPartyApi.ts';
+import api from '../config/productApi.ts';
 import type { Products, QueryParams } from '../utils/types.ts';
 import { getFormattedNumber } from '../utils/utils.ts';
 import type { ParsedQs } from 'qs';
