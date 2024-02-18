@@ -1,11 +1,32 @@
 import axios from 'axios';
 import { getFromLocalStorage } from './localStorageApi';
 
+interface BaseResponse<T> {
+  message?: string;
+  data?: T;
+  error?: string;
+  [key: string]: any;
+}
+
+interface FetchUserBody {
+  email: string;
+  password: string;
+}
+
+interface CreateUserBody extends FetchUserBody {
+  name: string;
+}
+
 interface User {
   userId: number;
   name: string;
   email: string;
   token: string;
+}
+
+interface VerfiyUser {
+  userId: number;
+  isUserValid: boolean;
 }
 
 interface QueryParams {
@@ -39,6 +60,8 @@ interface Products {
   limit: number;
 }
 
+type Categories = string[];
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
@@ -60,20 +83,20 @@ api.interceptors.request.use(
   }
 );
 
-export const fetchUserByEmail = async (body: Record<string, string>) => {
+export const fetchUserByEmail = async (body: FetchUserBody) => {
   try {
-    const response = await api.post('login', body);
-    const user: User = response.data?.data;
+    const response = await api.post<BaseResponse<User>>('login', body);
+    const user = response.data.data;
     return user;
   } catch (error) {
     console.error('Error in logging user', error);
   }
 };
 
-export const createUser = async (body: Record<string, string>) => {
+export const createUser = async (body: CreateUserBody) => {
   try {
-    const response = await api.post('sign-up', body);
-    const user: User = response.data?.data;
+    const response = await api.post<BaseResponse<User>>('sign-up', body);
+    const user = response.data.data;
     return user;
   } catch (error) {
     console.error('Error in signing user', error);
@@ -88,8 +111,8 @@ export const verfiyUser = async () => {
       return true;
     }
 
-    const response = await api.get('verify-user');
-    const isUserValid: boolean = response.data?.data?.isUserValid;
+    const response = await api.get<BaseResponse<VerfiyUser>>('verify-user');
+    const isUserValid = response.data.data?.isUserValid;
     return isUserValid;
   } catch (error) {
     console.error('Error in verify user', error);
@@ -99,8 +122,8 @@ export const verfiyUser = async () => {
 
 export const fetchProducts = (params?: QueryParams) => async () => {
   try {
-    const response = await api.get('products', { params });
-    const products: Products = response.data?.data;
+    const response = await api.get<BaseResponse<Products>>('products', { params });
+    const products = response.data.data;
     return products;
   } catch (error) {
     console.error('Error in getting products', error);
@@ -109,8 +132,8 @@ export const fetchProducts = (params?: QueryParams) => async () => {
 
 export const fetchCategories = async () => {
   try {
-    const response = await api.get('products/categories');
-    const categories: string[] = response.data?.data;
+    const response = await api.get<BaseResponse<Categories>>('products/categories');
+    const categories = response.data.data;
     return categories;
   } catch (error) {
     console.error('Error in getting categories', error);
@@ -119,8 +142,8 @@ export const fetchCategories = async () => {
 
 export const fetchProductById = (id: string) => async () => {
   try {
-    const response = await api.get(`product/${id}`);
-    const product: Product = response.data?.data;
+    const response = await api.get<BaseResponse<Product>>(`product/${id}`);
+    const product = response.data.data;
     return product;
   } catch (error) {
     console.error('Error in getting products', error);
