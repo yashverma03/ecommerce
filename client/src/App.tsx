@@ -11,6 +11,7 @@ import Footer from './helpers/Footer/Footer';
 import { store } from './utils/store/store';
 import PrivateRoute from './helpers/PrivateRoute';
 import Product from './components/Product/Product';
+import Cart from './components/Cart/Cart';
 
 const App = () => {
   return (
@@ -26,7 +27,7 @@ const App = () => {
             <Route path='/product/:id' element={<Product />} />
 
             <Route path='/' element={<PrivateRoute />}>
-              {/* TODO: List all private routes here */}
+              <Route path='/cart' element={<Cart />} />
             </Route>
           </Routes>
 
