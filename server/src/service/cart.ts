@@ -55,10 +55,10 @@ export const getCartItemsService = async (userId: number | undefined) => {
   }
 };
 
-export const updateCartItemService = async (
+export const updateCartItemQuantityService = async (
   userId: number | undefined,
   productId: string,
-  quantity: number
+  quantity: 1 | -1
 ) => {
   try {
     if (userId === undefined) {
@@ -67,8 +67,12 @@ export const updateCartItemService = async (
 
     const productIdNumber = parseInt(productId);
 
-    if (quantity < 0 || productIdNumber <= 0) {
-      return { error: 'Invalid product id, quantity or price', statusCode: 400 };
+    if (productIdNumber <= 0) {
+      return { error: 'Invalid product id', statusCode: 400 };
+    }
+
+    if (!(quantity === 1 || quantity === -1)) {
+      return { error: 'Quantity should be +1 or -1', statusCode: 400 };
     }
 
     const cartItem = await Cart.findOne({ where: { userId, productId: productIdNumber } });
@@ -77,12 +81,13 @@ export const updateCartItemService = async (
       return { error: 'Cart item not found', statusCode: 404 };
     }
 
-    if (quantity === 0) {
+    cartItem.quantity += quantity;
+
+    if (cartItem.quantity === 0) {
       await cartItem.destroy();
       return { message: 'Cart item deleted successfully', cartItem };
     }
 
-    cartItem.quantity = quantity;
     const updatedCartItem = await cartItem.save();
     return { message: 'Cart item updated successfully', cartItem: updatedCartItem };
   } catch (error: any) {

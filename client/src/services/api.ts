@@ -88,8 +88,7 @@ interface CartItems {
 
 interface UpdateCartItemBody {
   productId: number;
-  price: number;
-  quantity: number;
+  quantity: 1 | -1;
 }
 
 interface DeleteCartItem {
@@ -100,9 +99,6 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     'Content-Type': 'application/json'
-  },
-  params: {
-    limit: 100
   }
 });
 
@@ -217,14 +213,10 @@ export const fetchCartItems = async () => {
   }
 };
 
-export const updateCartItem = async (cartItems: UpdateCartItemBody) => {
+export const updateCartItemQuantity = async (cartItems: UpdateCartItemBody) => {
   try {
-    const { productId, price, quantity } = cartItems;
-    const body = {
-      price,
-      quantity
-    };
-
+    const { productId, quantity } = cartItems;
+    const body = { quantity };
     const response = await api.patch<BaseResponse<CartModel>>(`cart/${productId}`, body);
     const cartItemsDetails = response.data.data ?? null;
     return cartItemsDetails;

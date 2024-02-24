@@ -1,6 +1,11 @@
 import type { NextFunction, Response } from 'express';
 import type { AuthRequest, AddToCartBody, UpdateCartBody } from '../utils/types';
-import { addToCartService, deleteCartItemService, getCartItemsService, updateCartItemService } from '../service/cart.ts';
+import {
+  addToCartService,
+  deleteCartItemService,
+  getCartItemsService,
+  updateCartItemQuantityService
+} from '../service/cart.ts';
 
 export const addToCart = (req: AuthRequest, res: Response, next: NextFunction) => {
   const request = async () => {
@@ -52,13 +57,13 @@ export const getCartItems = (req: AuthRequest, res: Response, next: NextFunction
   void request();
 };
 
-export const updateCartItem = (req: AuthRequest, res: Response, next: NextFunction) => {
+export const updateCartItemQuantity = (req: AuthRequest, res: Response, next: NextFunction) => {
   const request = async () => {
     try {
       const { userId } = req;
       const { productId } = req.params;
       const { quantity }: UpdateCartBody = req.body;
-      const { message, cartItem, statusCode, error } = await updateCartItemService(
+      const { message, cartItem, statusCode, error } = await updateCartItemQuantityService(
         userId,
         productId,
         quantity

@@ -21,7 +21,7 @@ export interface QueryParams {
   sort?: `${string}-${'asc' | 'desc'}`;
   limit?: string;
   skip?: string;
-};
+}
 
 export type Products = Array<{
   id: number;
@@ -44,5 +44,5 @@ export interface AddToCartBody {
 }
 
 export interface UpdateCartBody {
-  quantity: number;
+  quantity: 1 | -1;
 }

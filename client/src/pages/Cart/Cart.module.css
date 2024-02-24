@@ -1,25 +1,152 @@
-.main {}
+.section {
+  @apply flex;
+}
 
-.cartItems {}
+.main {
+  @apply max-w-[1440px]
+  w-full
+  min-w-[355px]
+  flex
+  flex-col
+  justify-center
+  gap-[5%]
+  px-[5%]
+  mx-auto
+  mt-[160px]
+  mb-[100px];
+}
 
-.product {}
+.cartItems {
+  @apply flex
+  flex-col
+  gap-[40px];
+}
 
-.productImage {}
+.product {
+  @apply flex
+  gap-[15%];
+}
 
-.productDetails {}
+.productImage {
+  @apply w-[60%]
+  min-h-[300px]
+  max-h-[300px]
+  rounded-[20px]
+  object-cover
+  border
+  border-gray-400;
+}
 
-.productTitle {}
+.productDetails {
+  @apply w-[25%]
+  flex
+  flex-col
+  gap-[30px];
+}
 
-.productPrice {}
+.productTitle {
+  @apply text-[22px]
+  font-[700];
+}
 
-.productButton {}
+.productPrice {
+  @apply text-[18px]
+  font-[600]
+  text-blue-600;
+}
 
-.minusIcon {}
+.productButton {
+  @apply flex
+  gap-[10px]
+  items-center;
+}
 
-.productQuantity {}
+.quantityIcon,
+.disabled {
+  @apply size-[38px]
+  p-[10px]
+  rounded-full
+  hover:bg-gray-200;
+}
 
-.plusIcon {}
+.disabled {
+  @apply cursor-not-allowed
+  hover:bg-inherit;
+}
 
-.deleteButton{}
+.productQuantity {
+  @apply text-[18px]
+  font-[500]
+  bg-gray-300
+  rounded-full
+  px-[30px]
+  py-[5px]
+  cursor-text;
+}
 
-.buyButton {}
+.deleteButton {
+  @apply w-fit
+  bg-red-500
+  rounded-full
+  px-[55px]
+  py-[10px]
+  text-white
+  mt-[30px]
+  hover:bg-red-600;
+}
+
+.buyButton {
+  @apply w-fit
+  bg-yellow-400
+  rounded-full
+  px-[85px]
+  py-[15px]
+  mx-auto
+  mt-[100px]
+  transition-all
+  duration-300
+  hover:bg-yellow-500
+  hover:scale-110;
+}
+
+.emptyMessage {
+  @apply text-black
+  text-[30px];
+}
+
+@media screen and (max-width: 800px) {
+  .product {
+    @apply gap-[5%];
+  }
+
+  .productDetails {
+    @apply w-[35%];
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .cartItems {
+    @apply gap-[60px];
+  }
+
+  .product {
+    @apply flex-col
+    gap-[20px];
+  }
+
+  .productImage {
+    @apply w-full
+    min-h-[200px]
+    max-h-[200px];
+  }
+
+  .productDetails {
+    @apply w-full
+    gap-[20px]
+    items-center;
+  }
+
+  .deleteButton {
+    @apply mt-0;
+  }
+}
