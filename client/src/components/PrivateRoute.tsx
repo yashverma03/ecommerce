@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { verfiyUser } from '../services/api';
 import { removeUser } from '../store/reducers/user';
+import Spinner from './Spinner';
 
 const PrivateRoute = () => {
   const dispatch = useDispatch();
@@ -13,10 +14,10 @@ const PrivateRoute = () => {
   });
 
   if (isLoading) {
-    return null;
+    return <Spinner />;
   }
 
-  if (data === false || (isSuccess && data === undefined)) {
+  if (data === false || (isSuccess && data == null)) {
     dispatch(removeUser());
     localStorage.removeItem('user');
     window.location.href = '/login';
