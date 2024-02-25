@@ -63,10 +63,10 @@ export const getCategories = (req: Request, res: Response, next: NextFunction) =
 export const getProductsByCategory = (req: Request, res: Response, next: NextFunction) => {
   const request = async () => {
     try {
-      const { name } = req.params;
+      const { id } = req.params;
       const { query } = req;
-      const products = await getProductsByCategoryService(name, query);
-      res.status(200).json({ message: `Products found for ${name}`, data: products });
+      const products = await getProductsByCategoryService(id, query);
+      res.status(200).json({ message: `Products found for ${id}`, data: products });
     } catch (error) {
       next(error);
     }

@@ -98,9 +98,9 @@ export const getCategoriesService = async () => {
   }
 };
 
-export const getProductsByCategoryService = async (name: string, query: any) => {
+export const getProductsByCategoryService = async (id: string, query: any) => {
   try {
-    const response = await api.get<Products>(`products/category/${name}`, { params: query });
+    const response = await api.get<Products>(`products/category/${id}`, { params: query });
     return response.data;
   } catch (error: any) {
     throw new Error(`Error getting products by category. ${error.message}`);

@@ -120,7 +120,7 @@ api.interceptors.request.use(
 
 export const fetchUserByEmail = async (body: FetchUserBody) => {
   try {
-    const response = await api.post<BaseResponse<User>>('login', body);
+    const response = await api.post<BaseResponse<User>>('user/login', body);
     const user = response.data.data ?? null;
     return user;
   } catch (error) {
@@ -131,7 +131,7 @@ export const fetchUserByEmail = async (body: FetchUserBody) => {
 
 export const createUser = async (body: CreateUserBody) => {
   try {
-    const response = await api.post<BaseResponse<User>>('sign-up', body);
+    const response = await api.post<BaseResponse<User>>('user/sign-up', body);
     const user = response.data.data ?? null;
     return user;
   } catch (error) {
@@ -148,7 +148,7 @@ export const verfiyUser = async () => {
       return true;
     }
 
-    const response = await api.get<BaseResponse<VerfiyUser>>('verify-user');
+    const response = await api.get<BaseResponse<VerfiyUser>>('user/verify');
     const isUserValid = response.data.data?.isUserValid ?? false;
     return isUserValid;
   } catch (error) {

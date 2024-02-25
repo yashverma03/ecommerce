@@ -18,15 +18,15 @@ import { createPayment } from '../controller/payment.ts';
 
 const router = express.Router();
 
-router.post('/sign-up', createUser);
-router.post('/login', getUserByEmail);
-router.get('/verify-user', authenticateUser, verifyUser);
+router.post('/user/sign-up', createUser);
+router.post('/user/login', getUserByEmail);
+router.get('/user/verify', authenticateUser, verifyUser);
 
 router.get('/products', getProducts);
 router.get('/product/:id', getProductById);
 router.get('/products/search', getProductsByName);
 router.get('/products/categories', getCategories);
-router.get('/products/category/:name', getProductsByCategory);
+router.get('/products/category/:id', getProductsByCategory);
 
 router.post('/cart', authenticateUser, addToCart);
 router.get('/cart', authenticateUser, getCartItems);
