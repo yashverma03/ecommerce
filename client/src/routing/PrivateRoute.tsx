@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { verfiyUser } from '../services/api';
 import { removeUser } from '../store/reducers/user';
-import Spinner from './Spinner';
+import Spinner from '../components/Spinner';
 
 const PrivateRoute = () => {
   const dispatch = useDispatch();

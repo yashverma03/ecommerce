@@ -9,7 +9,7 @@ import Products from './pages/Products/Products';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { store } from './store/store';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './routing/PrivateRoute';
 import Product from './pages/Product/Product';
 import Cart from './pages/Cart/Cart';
 import Order from './pages/Order/Order';
