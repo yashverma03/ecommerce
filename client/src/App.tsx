@@ -7,6 +7,8 @@ import queryClient from './config/queryClient';
 import { store } from './store/store';
 import PrivateRoute from './routing/PrivateRoute';
 import Spinner from './components/Spinner';
+import useVersionSync from './components/hooks/useVersionSync';
+import ScrollToTop from './components/ScrollToTop';
 
 const Header = lazy(async () => await import('./components/Header/Header'));
 const Footer = lazy(async () => await import('./components/Footer/Footer'));
@@ -18,11 +20,14 @@ const Cart = lazy(async () => await import('./pages/Cart/Cart'));
 const Order = lazy(async () => await import('./pages/Order/Order'));
 
 const App = () => {
+  useVersionSync();
+
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Suspense fallback={<Spinner />}>
+            <ScrollToTop />
             <Header />
 
             <Routes>
