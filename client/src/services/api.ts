@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { getFromLocalStorage } from '../utils/localStorage';
 
 interface BaseResponse<T> {
@@ -93,6 +94,10 @@ interface UpdateCartItemBody {
 
 interface DeleteCartItem {
   cartsDeleted: number;
+}
+
+interface PaymentSession {
+  sessionId: string;
 }
 
 const api = axios.create({
@@ -231,6 +236,21 @@ export const deleteCartItem = async (productId: number) => {
     const response = await api.delete<BaseResponse<DeleteCartItem>>(`cart/${productId}`);
     const cartsDeleted = response.data.data ?? null;
     return cartsDeleted;
+  } catch (error) {
+    console.error('Error in deleting cart items:', error);
+    return null;
+  }
+};
+
+export const createPayment = async () => {
+  try {
+    const response = await api.post<BaseResponse<PaymentSession>>('/payment');
+    const sessionId = response.data.data?.sessionId ?? null;
+
+    const publishableKey: string = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+    const stripe = await loadStripe(publishableKey);
+
+    return { sessionId, stripe };
   } catch (error) {
     console.error('Error in deleting cart items:', error);
     return null;

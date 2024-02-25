@@ -2,7 +2,12 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import styles from './Cart.module.css';
 import minusIcon from '../../assets/cart/minusIcon.svg';
 import plusIcon from '../../assets/cart/plusIcon.svg';
-import { deleteCartItem, fetchCartItems, updateCartItemQuantity } from '../../services/api';
+import {
+  createPayment,
+  deleteCartItem,
+  fetchCartItems,
+  updateCartItemQuantity
+} from '../../services/api';
 import Spinner from '../../components/Spinner';
 
 const Cart = () => {
@@ -12,8 +17,8 @@ const Cart = () => {
   });
 
   const updateMutation = useMutation({ mutationFn: updateCartItemQuantity });
-
   const deleteMutation = useMutation({ mutationFn: deleteCartItem });
+  const buyMutation = useMutation({ mutationFn: createPayment });
 
   const handleQuantityChange = (productId: number, changeQuantityByAmount: 1 | -1) => () => {
     const request = async () => {
@@ -41,8 +46,22 @@ const Cart = () => {
     void request();
   };
 
-  const handleBuy = () => {
-    // TODO
+  const handleCheckout = () => {
+    const request = async () => {
+      try {
+        const stripeData = await buyMutation.mutateAsync();
+
+        if (stripeData?.sessionId == null || stripeData.stripe == null) {
+          throw new Error('Error in creating payment session');
+        }
+
+        await stripeData.stripe.redirectToCheckout({ sessionId: stripeData.sessionId });
+      } catch (error) {
+        console.error('Error in creating payment session:', error);
+      }
+    };
+
+    void request();
   };
 
   const getCartItems = () => {
@@ -77,6 +96,12 @@ const Cart = () => {
     ));
   };
 
+  const getErrorMessage = () => {
+    if (buyMutation.isError || (buyMutation.isSuccess && buyMutation.data == null)) {
+      return <p className={`error ${styles.errorMessage}`}>Error in creating payment session</p>;
+    }
+  };
+
   if (query.isLoading) {
     return <Spinner />;
   }
@@ -93,9 +118,10 @@ const Cart = () => {
     <section className={styles.section}>
       <div className={styles.main}>
         <article className={styles.cartItems}>{getCartItems()}</article>
-        <button className={styles.buyButton} onClick={handleBuy}>
-          Proceed to buy
+        <button className={styles.buyButton} onClick={handleCheckout}>
+          {buyMutation.isPending ? 'Processing payment...' : 'Proceed to buy'}
         </button>
+        {getErrorMessage()}
       </div>
     </section>
   );

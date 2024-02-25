@@ -114,6 +114,11 @@
   text-[30px];
 }
 
+.errorMessage {
+  @apply text-[14px]
+  mt-[20px];
+}
+
 @media screen and (max-width: 800px) {
   .product {
     @apply gap-[5%];

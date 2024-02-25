@@ -14,6 +14,7 @@ import {
   getCartItems,
   updateCartItemQuantity
 } from '../controller/cart.ts';
+import { createPayment } from '../controller/payment.ts';
 
 const router = express.Router();
 
@@ -31,5 +32,7 @@ router.post('/cart', authenticateUser, addToCart);
 router.get('/cart', authenticateUser, getCartItems);
 router.patch('/cart/:productId', authenticateUser, updateCartItemQuantity);
 router.delete('/cart/:productId', authenticateUser, deleteCartItem);
+
+router.post('/payment', authenticateUser, createPayment);
 
 export default router;
