@@ -24,18 +24,18 @@ const Header = () => {
 
   const getButtons = () => {
     return user !== null ? (
-      <section className={styles.userWrap}>
+      <article className={styles.userWrap}>
         <h1 className={styles.user}>{user?.name}</h1>
         <button className={styles.button} onClick={handleLogout}>
           Logout
         </button>
-      </section>
+      </article>
     ) : (
-      <section className={styles.signUpWrap}>
+      <article className={styles.signUpWrap}>
         <Link className={styles.signUp} to='/sign-up'>
           Sign Up
         </Link>
-      </section>
+      </article>
     );
   };
 
@@ -51,7 +51,7 @@ const Header = () => {
         <img className={styles.logo} src={logo} alt='logo' />
       </Link>
 
-      <section className={styles.search}>
+      <article className={styles.search}>
         <input
           className={styles.input}
           placeholder='Search for products, brands and more'
@@ -64,10 +64,11 @@ const Header = () => {
           alt='search'
           onClick={() => dispatch(setSearch(input))}
         />
-      </section>
+      </article>
 
-      <Link to='/cart'>
+      <Link to='/cart' className={styles.cartWrap}>
         <img className={styles.cartIcon} src={cartIcon} alt='cart' />
+        <p className={styles.cart}>Cart</p>
       </Link>
 
       {getButtons()}

@@ -2,6 +2,7 @@
   @apply fixed
   top-0
   w-full
+  min-w-[355px]
   h-[80px]
   flex
   justify-between
@@ -48,9 +49,21 @@
   hover:brightness-75;
 }
 
+.cartWrap {
+  @apply flex
+  items-center
+  gap-[10px]
+  hover:underline;
+}
+
 .cartIcon {
   @apply min-w-[25px]
-  min-h-[25px];
+  min-h-[25px]
+  hover:brightness-90;
+}
+
+.cart {
+  @apply text-[14px];
 }
 
 .userWrap,
