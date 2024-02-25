@@ -1,0 +1,31 @@
+.section {
+  @apply flex
+  min-h-[80vh]
+  items-center;
+}
+
+.main {
+  @apply max-w-[1440px]
+  w-full
+  min-w-[355px]
+  h-full
+  flex
+  flex-col
+  justify-center
+  items-center
+  gap-[30px]
+  px-[5%]
+  mx-auto
+  my-[80px];
+}
+
+.title {
+  @apply text-[24px]
+  text-green-500
+  font-bold
+  text-center;
+}
+
+.message {
+  @apply text-center;
+}

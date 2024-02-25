@@ -12,6 +12,7 @@ import { store } from './store/store';
 import PrivateRoute from './components/PrivateRoute';
 import Product from './pages/Product/Product';
 import Cart from './pages/Cart/Cart';
+import Order from './pages/Order/Order';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
 
             <Route path='/' element={<PrivateRoute />}>
               <Route path='/cart' element={<Cart />} />
+              <Route path='/order' element={<Order />} />
             </Route>
           </Routes>
 
