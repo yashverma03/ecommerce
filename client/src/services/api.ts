@@ -145,7 +145,7 @@ export const verfiyUser = async () => {
     const user = getFromLocalStorage('user');
 
     if (user === null) {
-      return true;
+      return false;
     }
 
     const response = await api.get<BaseResponse<VerfiyUser>>('user/verify');
