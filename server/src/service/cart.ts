@@ -9,7 +9,7 @@ export const addToCartService = async (
 ) => {
   try {
     if (userId === undefined) {
-      return { error: 'UserId is invalid', statusCode: 401 };
+      return { error: 'userId is invalid', statusCode: 401 };
     }
 
     if (quantity <= 0 || productId <= 0 || price < 0) {
@@ -36,7 +36,7 @@ export const addToCartService = async (
 export const getCartItemsService = async (userId: number | undefined) => {
   try {
     if (userId === undefined) {
-      return { error: 'UserId is invalid', statusCode: 401 };
+      return { error: 'userId is invalid', statusCode: 401 };
     }
 
     const cartItems = await Cart.findAll({ where: { userId } });
@@ -62,7 +62,7 @@ export const updateCartItemQuantityService = async (
 ) => {
   try {
     if (userId === undefined) {
-      return { error: 'UserId is invalid', statusCode: 401 };
+      return { error: 'userId is invalid', statusCode: 401 };
     }
 
     const productIdNumber = parseInt(productId);
@@ -98,7 +98,7 @@ export const updateCartItemQuantityService = async (
 export const deleteCartItemService = async (userId: number | undefined, productId: string) => {
   try {
     if (userId === undefined) {
-      return { error: 'UserId is invalid', statusCode: 401 };
+      return { error: 'userId is invalid', statusCode: 401 };
     }
 
     const productIdNumber = parseInt(productId);

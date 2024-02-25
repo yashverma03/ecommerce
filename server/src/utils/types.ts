@@ -23,7 +23,7 @@ export interface QueryParams {
   skip?: string;
 }
 
-export type Products = Array<{
+export interface Product {
   id: number;
   title: string;
   description: string;
@@ -35,7 +35,16 @@ export type Products = Array<{
   category: string;
   thumbnail: string;
   images: string[];
-}>;
+}
+
+export interface Products {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
+export type Categories = string[];
 
 export interface AddToCartBody {
   productId: number;

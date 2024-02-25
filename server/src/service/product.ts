@@ -1,13 +1,13 @@
 import api from '../config/productApi.ts';
-import type { Products, QueryParams } from '../utils/types.ts';
+import type { Categories, Product, Products, QueryParams } from '../utils/types.ts';
 import { getFormattedNumber } from '../utils/utils.ts';
 import type { ParsedQs } from 'qs';
 
 export const getProductsService = async (queryParams: QueryParams) => {
   try {
     const { search, category, minPrice, maxPrice, sort, limit, skip }: QueryParams = queryParams;
-    const response = await api.get('products', { params: { limit: 100 } });
-    const products: Products = response.data.products;
+    const response = await api.get<Products>('products', { params: { limit: 100 } });
+    const products = response.data.products;
     let filteredProducts = products;
 
     if (category !== undefined && category.trim() !== '') {
@@ -73,7 +73,7 @@ export const getProductsService = async (queryParams: QueryParams) => {
 
 export const getProductByIdService = async (id: string) => {
   try {
-    const response = await api.get(`products/${id}`);
+    const response = await api.get<Product>(`products/${id}`);
     return response.data;
   } catch (error: any) {
     throw new Error(`Error getting product by id. ${error.message}`);
@@ -82,7 +82,7 @@ export const getProductByIdService = async (id: string) => {
 
 export const getProductsByNameService = async (query: ParsedQs) => {
   try {
-    const response = await api.get('products/search', { params: query });
+    const response = await api.get<Products>('products/search', { params: query });
     return response.data;
   } catch (error: any) {
     throw new Error(`Error getting by search. ${error.message}`);
@@ -91,7 +91,7 @@ export const getProductsByNameService = async (query: ParsedQs) => {
 
 export const getCategoriesService = async () => {
   try {
-    const response = await api.get('products/categories');
+    const response = await api.get<Categories>('products/categories');
     return response.data;
   } catch (error: any) {
     throw new Error(`Error getting categories. ${error.message}`);
@@ -100,7 +100,7 @@ export const getCategoriesService = async () => {
 
 export const getProductsByCategoryService = async (name: string, query: any) => {
   try {
-    const response = await api.get(`products/category/${name}`, { params: query });
+    const response = await api.get<Products>(`products/category/${name}`, { params: query });
     return response.data;
   } catch (error: any) {
     throw new Error(`Error getting products by category. ${error.message}`);
