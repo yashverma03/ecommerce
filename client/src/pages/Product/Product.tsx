@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../../store/store';
 import useFeedback from '../../components/hooks/useFeedback';
 import Spinner from '../../components/Spinner';
+import queryClient from '../../config/queryClient';
 
 const Product = () => {
   const navigate = useNavigate();
@@ -21,7 +22,10 @@ const Product = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: addToCart
+    mutationFn: addToCart,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['cart'] });
+    }
   });
 
   const isVisible = useFeedback([mutation.isSuccess]);
