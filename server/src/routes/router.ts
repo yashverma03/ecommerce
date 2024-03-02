@@ -1,5 +1,6 @@
 import express from 'express';
-import { authenticateUser } from '../middleware/auth.ts';
+import authenticateUser from '../middleware/auth.ts';
+import cacheControl from '../middleware/cacheControl.ts';
 import { createUser, getUserByEmail, verifyUser } from '../controller/user.ts';
 import {
   getCategories,
@@ -22,11 +23,11 @@ router.post('/user/sign-up', createUser);
 router.post('/user/login', getUserByEmail);
 router.get('/user/verify', authenticateUser, verifyUser);
 
-router.get('/products', getProducts);
-router.get('/product/:id', getProductById);
-router.get('/products/search', getProductsByName);
-router.get('/products/categories', getCategories);
-router.get('/products/category/:id', getProductsByCategory);
+router.get('/products', cacheControl, getProducts);
+router.get('/product/:id', cacheControl, getProductById);
+router.get('/products/search', cacheControl, getProductsByName);
+router.get('/products/categories', cacheControl, getCategories);
+router.get('/products/category/:id', cacheControl, getProductsByCategory);
 
 router.post('/cart', authenticateUser, addToCart);
 router.get('/cart', authenticateUser, getCartItems);
