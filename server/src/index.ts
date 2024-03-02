@@ -2,8 +2,8 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import router from './routes/router.ts';
-import { errorHandler } from './middleware/errorHandler.ts';
-import { rateLimiter } from './middleware/rateLimiter.ts';
+import errorHandler from './middleware/errorHandler.ts';
+import rateLimiter from './middleware/rateLimiter.ts';
 
 const app = express();
 

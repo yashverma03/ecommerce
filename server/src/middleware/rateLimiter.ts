@@ -1,6 +1,6 @@
 import rateLimit from 'express-rate-limit';
 
-export const rateLimiter = rateLimit({
+const rateLimiter = rateLimit({
   max: 200,
   standardHeaders: true,
   legacyHeaders: false,
@@ -8,3 +8,5 @@ export const rateLimiter = rateLimit({
     res.status(429).json({ error: 'Too many requests, please try again later' });
   }
 });
+
+export default rateLimiter;

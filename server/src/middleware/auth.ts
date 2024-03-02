@@ -2,7 +2,7 @@ import type { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import type { AuthRequest } from '../utils/types';
 
-export const authenticateUser = (req: AuthRequest, res: Response, next: NextFunction) => {
+const authenticateUser = (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
 
@@ -34,3 +34,5 @@ export const authenticateUser = (req: AuthRequest, res: Response, next: NextFunc
     });
   }
 };
+
+export default authenticateUser;
