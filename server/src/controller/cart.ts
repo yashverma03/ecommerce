@@ -36,14 +36,14 @@ export const getCartItems = (req: AuthRequest, res: Response, next: NextFunction
   const request = async () => {
     try {
       const { userId } = req;
-      const { cartItems, statusCode, error } = await getCartItemsService(userId);
+      const { cartItems, message, statusCode, error } = await getCartItemsService(userId);
 
       if (error !== undefined) {
         return res.status(statusCode).json({ error });
       }
 
       res.status(200).json({
-        message: 'Cart items found',
+        message,
         data: {
           cartItems,
           total: cartItems.length

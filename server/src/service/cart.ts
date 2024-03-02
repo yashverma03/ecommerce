@@ -1,4 +1,5 @@
 import Cart from '../model/cart.ts';
+import CartItem from '../model/cartItem.ts';
 import { getProductByIdService } from './product.ts';
 
 export const addToCartService = async (
@@ -16,11 +17,14 @@ export const addToCartService = async (
       return { error: 'Invalid product id, quantity or price', statusCode: 400 };
     }
 
-    const existingCarts = await Cart.findAll({ where: { userId } });
+    const [activeCart] = await Cart.findOrCreate({ where: { userId, isActive: true } });
+    const { cartId } = activeCart;
+
+    const existingCarts = await CartItem.findAll({ where: { cartId } });
     const existingCart = existingCarts.find((cart) => cart.productId === productId);
 
-    if (existingCart === undefined) {
-      const newCart = await Cart.create({ userId, productId, quantity, price });
+    if (existingCart == null) {
+      const newCart = await CartItem.create({ cartId, productId, quantity, price });
       return { message: 'Product added to cart successfully', cartItem: newCart };
     }
 
@@ -39,7 +43,14 @@ export const getCartItemsService = async (userId: number | undefined) => {
       return { error: 'userId is invalid', statusCode: 401 };
     }
 
-    const cartItems = await Cart.findAll({ where: { userId } });
+    const activeCart = await Cart.findOne({ where: { userId, isActive: true } });
+
+    if (activeCart == null) {
+      return { message: 'Cart is empty', cartItems: [] };
+    }
+
+    const { cartId } = activeCart;
+    const cartItems = await CartItem.findAll({ where: { cartId } });
 
     const cartItemsWithProducts = await Promise.all(
       cartItems.map(async (cartItem) => {
@@ -49,7 +60,7 @@ export const getCartItemsService = async (userId: number | undefined) => {
       })
     );
 
-    return { cartItems: cartItemsWithProducts };
+    return { message: 'Cart items found', cartItems: cartItemsWithProducts };
   } catch (error: any) {
     throw new Error(`Error in getting cart items. ${error.message}`);
   }
@@ -75,7 +86,14 @@ export const updateCartItemQuantityService = async (
       return { error: 'Quantity should be +1 or -1', statusCode: 400 };
     }
 
-    const cartItem = await Cart.findOne({ where: { userId, productId: productIdNumber } });
+    const activeCart = await Cart.findOne({ where: { userId, isActive: true } });
+
+    if (activeCart == null) {
+      return { error: 'Cart is empty', statusCode: 404 };
+    }
+
+    const { cartId } = activeCart;
+    const cartItem = await CartItem.findOne({ where: { cartId, productId: productIdNumber } });
 
     if (cartItem === null) {
       return { error: 'Cart item not found', statusCode: 404 };
@@ -107,7 +125,14 @@ export const deleteCartItemService = async (userId: number | undefined, productI
       return { error: 'Invalid product id', statusCode: 400 };
     }
 
-    const cartsDeleted = await Cart.destroy({ where: { userId, productId: productIdNumber } });
+    const activeCart = await Cart.findOne({ where: { userId, isActive: true } });
+
+    if (activeCart == null) {
+      return { error: 'Cart is empty', statusCode: 404 };
+    }
+
+    const { cartId } = activeCart;
+    const cartsDeleted = await CartItem.destroy({ where: { cartId, productId: productIdNumber } });
 
     if (cartsDeleted === 0) {
       return { error: 'Cart item not found', statusCode: 404 };
