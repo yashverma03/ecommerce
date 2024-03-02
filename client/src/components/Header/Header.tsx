@@ -45,9 +45,25 @@ const Header = () => {
     return hide ? 'hide' : styles.main;
   };
 
+  const handleSearch = () => {
+    dispatch(setSearch(input));
+  };
+
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <header className={getClassName()}>
-      <Link to='/'>
+      <Link
+        to='/'
+        onClick={() => {
+          dispatch(setSearch(''));
+          setInput('');
+        }}
+      >
         <img className={styles.logo} src={logo} alt='logo' />
       </Link>
 
@@ -57,13 +73,9 @@ const Header = () => {
           placeholder='Search for products, brands and more'
           value={input}
           onChange={(event) => setInput(event.target.value)}
+          onKeyDown={handleEnter}
         />
-        <img
-          className={styles.searchIcon}
-          src={searchIcon}
-          alt='search'
-          onClick={() => dispatch(setSearch(input))}
-        />
+        <img className={styles.searchIcon} src={searchIcon} alt='search' onClick={handleSearch} />
       </article>
 
       <Link to='/cart' className={styles.cartWrap}>
