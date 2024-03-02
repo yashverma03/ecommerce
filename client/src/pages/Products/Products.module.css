@@ -177,6 +177,10 @@
   @apply bg-green-400;
 }
 
+.warning {
+  @apply h-[300px];
+}
+
 @media screen and (max-width: 900px) {
   .section {
     @apply flex-col

@@ -130,7 +130,11 @@ const Products = () => {
   };
 
   const getProducts = () => {
-    return productQuery?.data?.products?.map((product) => (
+    if (productQuery.isSuccess && productQuery.data?.products.length === 0) {
+      return <p className={`warning-screen ${styles.warning}`}>No Products were found</p>;
+    }
+
+    const products = productQuery?.data?.products?.map((product) => (
       <Link className={styles.product} to={`/product/${product.id}`} key={product.id}>
         <img className={styles.image} src={product.thumbnail} alt='thumbnail' />
 
@@ -154,6 +158,8 @@ const Products = () => {
         </div>
       </Link>
     ));
+
+    return <section className={styles.products}>{products}</section>;
   };
 
   const handlePagination = (page: number) => () => {
@@ -188,10 +194,6 @@ const Products = () => {
     return <p className='error-screen'>Some error occured</p>;
   }
 
-  if (productQuery.isSuccess && productQuery.data?.products.length === 0) {
-    return <p className='warning-screen'>No Products were found</p>;
-  }
-
   return (
     <main className={styles.main}>
       <section className={styles.section}>
@@ -199,7 +201,7 @@ const Products = () => {
         {getPriceFilter()}
         {getCategories()}
       </section>
-      <section className={styles.products}>{getProducts()}</section>
+      {getProducts()}
       <div className={styles.pagination}>{getPagination()}</div>
     </main>
   );
