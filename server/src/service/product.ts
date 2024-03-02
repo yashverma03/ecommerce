@@ -1,7 +1,6 @@
 import api from '../config/productApi.ts';
 import type { Categories, Product, Products, QueryParams } from '../utils/types.ts';
 import { getFormattedNumber } from '../utils/utils.ts';
-import type { ParsedQs } from 'qs';
 
 export const getProductsService = async (queryParams: QueryParams) => {
   try {
@@ -80,29 +79,11 @@ export const getProductByIdService = async (id: string) => {
   }
 };
 
-export const getProductsByNameService = async (query: ParsedQs) => {
-  try {
-    const response = await api.get<Products>('products/search', { params: query });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(`Error getting by search. ${error.message}`);
-  }
-};
-
 export const getCategoriesService = async () => {
   try {
     const response = await api.get<Categories>('products/categories');
     return response.data;
   } catch (error: any) {
     throw new Error(`Error getting categories. ${error.message}`);
-  }
-};
-
-export const getProductsByCategoryService = async (id: string, query: any) => {
-  try {
-    const response = await api.get<Products>(`products/category/${id}`, { params: query });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(`Error getting products by category. ${error.message}`);
   }
 };
