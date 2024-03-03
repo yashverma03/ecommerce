@@ -71,7 +71,9 @@ const Login = () => {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           {getInputs()}
-          <button className={styles.button}>{isPending ? 'Logging you in...' : 'Login'}</button>
+          <button className={styles.button} disabled={isPending}>
+            {isPending ? 'Logging you in...' : 'Login'}
+          </button>
           {getError()}
         </form>
 

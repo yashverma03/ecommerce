@@ -84,7 +84,7 @@ const Product = () => {
 
         <div className={styles.imageWrap}>
           <img className={styles.mainImage} src={data?.images[currentImage]} alt='product image' />
-          <button className={styles.button} onClick={handleCart}>
+          <button className={styles.button} disabled={mutation.isPending} onClick={handleCart}>
             {user !== null ? 'Add to cart' : 'Login to add to cart'}
           </button>
           {isVisible && getMessage()}

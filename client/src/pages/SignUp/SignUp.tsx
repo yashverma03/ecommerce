@@ -75,7 +75,7 @@ const SignUp = () => {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           {getInputs()}
-          <button className={styles.button}>
+          <button className={styles.button} disabled={isPending}>
             {isPending ? 'Creating your account...' : 'Sign Up'}
           </button>
           {getError()}

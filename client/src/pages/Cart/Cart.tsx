@@ -20,9 +20,14 @@ const Cart = () => {
   const deleteMutation = useMutation({ mutationFn: deleteCartItem });
   const buyMutation = useMutation({ mutationFn: createPayment });
 
-  const handleQuantityChange = (productId: number, changeQuantityByAmount: 1 | -1) => () => {
+  const handleQuantityChange = (
+    event: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    productId: number,
+    changeQuantityByAmount: 1 | -1
+  ) => {
     const request = async () => {
       try {
+        event.preventDefault();
         await updateMutation.mutateAsync({ productId, quantity: changeQuantityByAmount });
         await query.refetch();
       } catch (error) {
@@ -33,9 +38,10 @@ const Cart = () => {
     void request();
   };
 
-  const handleDeleteItem = (productId: number) => () => {
+  const handleDeleteItem = (event: React.MouseEvent<HTMLButtonElement>, productId: number) => {
     const request = async () => {
       try {
+        event.preventDefault();
         await deleteMutation.mutateAsync(productId);
         await query.refetch();
       } catch (error) {
@@ -46,15 +52,14 @@ const Cart = () => {
     void request();
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = (event: React.MouseEvent<HTMLButtonElement>) => {
     const request = async () => {
       try {
+        event.preventDefault();
         const stripeData = await buyMutation.mutateAsync();
-
         if (stripeData?.sessionId == null || stripeData.stripe == null) {
           throw new Error('Error in creating payment session');
         }
-
         await stripeData.stripe.redirectToCheckout({ sessionId: stripeData.sessionId });
       } catch (error) {
         console.error('Error in creating payment session:', error);
@@ -72,23 +77,27 @@ const Cart = () => {
           <h1 className={styles.productTitle}>{cart.productDetails.title}</h1>
           <p className={styles.productPrice}>₹{cart.productDetails.price}</p>
 
-          <button className={styles.productButton}>
+          <button className={styles.productButton} disabled={updateMutation.isPending}>
             <img
               className={updateMutation.isPending ? styles.disabled : styles.quantityIcon}
               src={minusIcon}
               alt='minus'
-              onClick={handleQuantityChange(cart.productId, -1)}
+              onClick={(event) => handleQuantityChange(event, cart.productId, -1)}
             />
             <p className={styles.productQuantity}>{cart.quantity}</p>
             <img
-              className={styles.quantityIcon}
+              className={updateMutation.isPending ? styles.disabled : styles.quantityIcon}
               src={plusIcon}
               alt='plus'
-              onClick={handleQuantityChange(cart.productId, +1)}
+              onClick={(event) => handleQuantityChange(event, cart.productId, 1)}
             />
           </button>
 
-          <button className={styles.deleteButton} onClick={handleDeleteItem(cart.productId)}>
+          <button
+            className={styles.deleteButton}
+            disabled={deleteMutation.isPending}
+            onClick={(event) => handleDeleteItem(event, cart.productId)}
+          >
             Delete
           </button>
         </div>
@@ -116,13 +125,17 @@ const Cart = () => {
 
   return (
     <section className={styles.section}>
-      <div className={styles.main}>
+      <form className={styles.main}>
         <article className={styles.cartItems}>{getCartItems()}</article>
-        <button className={styles.buyButton} onClick={handleCheckout}>
+        <button
+          className={styles.buyButton}
+          disabled={buyMutation.isPending}
+          onClick={handleCheckout}
+        >
           {buyMutation.isPending ? 'Processing payment...' : 'Proceed to buy'}
         </button>
         {getErrorMessage()}
-      </div>
+      </form>
     </section>
   );
 };
