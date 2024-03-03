@@ -10,8 +10,6 @@ node_modules
 dist
 dist-ssr
 *.local
-projectDetails/
-
 
 .vscode/*
 .idea

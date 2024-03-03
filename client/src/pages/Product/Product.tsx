@@ -37,20 +37,18 @@ const Product = () => {
         key={index}
         src={image}
         alt='product image'
-        onMouseEnter={() => {
-          setCurrentImage(index);
-        }}
+        onMouseEnter={() => setCurrentImage(index)}
       />
     ));
   };
 
   const handleCart = () => {
-    if (user === null) {
+    if (user == null) {
       navigate('/login');
       return;
     }
 
-    if (data === undefined || data === null) {
+    if (data == null) {
       return;
     }
 
@@ -62,11 +60,11 @@ const Product = () => {
       return <p className={`loading ${styles.message}`}>Adding to cart...</p>;
     }
 
-    if (mutation.isError || (mutation.isSuccess && mutation.data === null)) {
+    if (mutation.isError || (mutation.isSuccess && mutation.data == null)) {
       return <p className={`error ${styles.message}`}>Some error occured</p>;
     }
 
-    if (mutation.data !== undefined) {
+    if (mutation.data != null) {
       return <p className={`success ${styles.message}`}>Added to cart successfully</p>;
     }
   };
@@ -75,7 +73,7 @@ const Product = () => {
     return <Spinner />;
   }
 
-  if ((isSuccess && data === null) || isError) {
+  if ((isSuccess && data == null) || isError) {
     return <p className='error-screen'>Some error occured</p>;
   }
 

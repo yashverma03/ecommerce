@@ -2,6 +2,12 @@ import type { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import type { AuthRequest } from '../utils/types';
 
+/**
+ * Middleware function to authenticate user requests using JWT token.
+ * @param {AuthRequest} req - The Express request object with user authentication information.
+ * @param {Response} res - The Express response object for sending responses.
+ * @param {NextFunction} next - The Express next function to pass control to the next middleware.
+ */
 const authenticateUser = (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];

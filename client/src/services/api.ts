@@ -144,7 +144,7 @@ export const verfiyUser = async () => {
   try {
     const user = getFromLocalStorage('user');
 
-    if (user === null) {
+    if (user == null) {
       return false;
     }
 

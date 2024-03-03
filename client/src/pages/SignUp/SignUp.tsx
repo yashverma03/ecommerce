@@ -22,7 +22,7 @@ const SignUp = () => {
   const { mutate, data, isPending, isSuccess, isError } = useMutation({
     mutationFn: createUser,
     onSuccess: (mutationData) => {
-      if (mutationData !== undefined && mutationData !== null) {
+      if (mutationData != null) {
         setToLocalStorage('user', mutationData);
         dispatch(setUser(mutationData));
         navigate('/');
@@ -37,23 +37,9 @@ const SignUp = () => {
 
   const getInputs = () => {
     const inputs = [
-      {
-        id: 'name',
-        label: 'Full Name',
-        placeholder: 'Your name'
-      },
-      {
-        id: 'email',
-        label: 'Email',
-        placeholder: 'Your email',
-        type: 'email'
-      },
-      {
-        id: 'password',
-        label: 'Password',
-        placeholder: 'Create a password',
-        type: 'password'
-      }
+      { id: 'name', label: 'Full Name', placeholder: 'Your name' },
+      { id: 'email', label: 'Email', placeholder: 'Your email', type: 'email' },
+      { id: 'password', label: 'Password', placeholder: 'Create a password', type: 'password' }
     ];
 
     return inputs.map((input) => {
@@ -66,9 +52,7 @@ const SignUp = () => {
             placeholder={input.placeholder}
             type={input.type ?? 'text'}
             value={formData[input.id as keyof typeof formData]}
-            onChange={(event) => {
-              setFormData({ ...formData, [input.id]: event.target.value });
-            }}
+            onChange={(event) => setFormData({ ...formData, [input.id]: event.target.value })}
             required
           />
         </div>
@@ -76,11 +60,9 @@ const SignUp = () => {
     });
   };
 
-  const buttonText = isPending ? 'Creating your account...' : 'Sign Up';
-
   const getError = () => {
     return (
-      ((isSuccess && data === null) || isError) && (
+      ((isSuccess && data == null) || isError) && (
         <p className={styles.error}>Error in creating account</p>
       )
     );
@@ -93,7 +75,9 @@ const SignUp = () => {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           {getInputs()}
-          <button className={styles.button}>{buttonText}</button>
+          <button className={styles.button}>
+            {isPending ? 'Creating your account...' : 'Sign Up'}
+          </button>
           {getError()}
         </form>
 

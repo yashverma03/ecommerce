@@ -48,9 +48,7 @@ const Products = () => {
       <select
         className={styles.sortSelect}
         value={sort}
-        onChange={(event) => {
-          setSort(event.target.value);
-        }}
+        onChange={(event) => setSort(event.target.value)}
       >
         <option value='' hidden>
           Sort by
@@ -81,9 +79,7 @@ const Products = () => {
           value={price.minPrice}
           type='number'
           placeholder='Min'
-          onChange={(event) => {
-            setPrice({ ...price, minPrice: event.target.value });
-          }}
+          onChange={(event) => setPrice({ ...price, minPrice: event.target.value })}
         />
         <p className={styles.priceText}>To</p>
         <input
@@ -91,9 +87,7 @@ const Products = () => {
           value={price.maxPrice}
           type='number'
           placeholder='Max'
-          onChange={(event) => {
-            setPrice({ ...price, maxPrice: event.target.value });
-          }}
+          onChange={(event) => setPrice({ ...price, maxPrice: event.target.value })}
         />
         <button className={styles.priceButton} onClick={handlePriceFilter}>
           Search
@@ -107,9 +101,7 @@ const Products = () => {
       <select
         className={styles.categorySelect}
         value={category}
-        onChange={(event) => {
-          setCategory(event.target.value);
-        }}
+        onChange={(event) => setCategory(event.target.value)}
       >
         <option value='' hidden>
           Select a category
@@ -168,7 +160,7 @@ const Products = () => {
   };
 
   const getPagination = () => {
-    if (productQuery?.data?.total === undefined) {
+    if (productQuery?.data?.total == null) {
       return null;
     }
 
@@ -190,7 +182,7 @@ const Products = () => {
     return <Spinner />;
   }
 
-  if ((productQuery.isSuccess && productQuery.data === null) || productQuery.isError) {
+  if ((productQuery.isSuccess && productQuery.data == null) || productQuery.isError) {
     return <p className='error-screen'>Some error occured</p>;
   }
 

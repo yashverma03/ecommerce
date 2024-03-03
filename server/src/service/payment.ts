@@ -1,7 +1,7 @@
 import { getCartItemsService } from './cart.ts';
 import Stripe from 'stripe';
 
-const { DOMAIN } = process.env;
+const { CLIENT_URL } = process.env;
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '');
 
 export const createPaymentService = async (userId: number | undefined) => {
@@ -32,8 +32,8 @@ export const createPaymentService = async (userId: number | undefined) => {
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${DOMAIN}/order`,
-      cancel_url: `${DOMAIN}/cart`
+      success_url: `${CLIENT_URL}/order`,
+      cancel_url: `${CLIENT_URL}/cart`
     });
 
     return { sessionId: session.id };

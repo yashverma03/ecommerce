@@ -4,7 +4,7 @@ interface Props {
 
 const Spinner = ({ className }: Props) => {
   return (
-    <main className={`loading-screen ${className}`}>
+    <figure className={`loading-screen ${className}`}>
       <svg
         aria-hidden='true'
         className='w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-blue-600'
@@ -21,7 +21,7 @@ const Spinner = ({ className }: Props) => {
           fill='currentFill'
         />
       </svg>
-    </main>
+    </figure>
   );
 };
 

@@ -21,7 +21,7 @@ const Login = () => {
   const { mutate, data, isPending, isSuccess, isError } = useMutation({
     mutationFn: fetchUserByEmail,
     onSuccess: (mutationData) => {
-      if (mutationData !== undefined && mutationData !== null) {
+      if (mutationData != null) {
         setToLocalStorage('user', mutationData);
         dispatch(setUser(mutationData));
         navigate('/');
@@ -36,18 +36,8 @@ const Login = () => {
 
   const getInputs = () => {
     const inputs = [
-      {
-        id: 'email',
-        label: 'Email',
-        placeholder: 'Your email',
-        type: 'email'
-      },
-      {
-        id: 'password',
-        label: 'Password',
-        placeholder: 'Your password',
-        type: 'password'
-      }
+      { id: 'email', label: 'Email', placeholder: 'Your email', type: 'email' },
+      { id: 'password', label: 'Password', placeholder: 'Your password', type: 'password' }
     ];
 
     return inputs.map((input) => {
@@ -60,9 +50,7 @@ const Login = () => {
             placeholder={input.placeholder}
             type={input.type ?? 'text'}
             value={formData[input.id as keyof typeof formData]}
-            onChange={(event) => {
-              setFormData({ ...formData, [input.id]: event.target.value });
-            }}
+            onChange={(event) => setFormData({ ...formData, [input.id]: event.target.value })}
             required
           />
         </div>
@@ -70,13 +58,9 @@ const Login = () => {
     });
   };
 
-  const buttonText = isPending ? 'Logging you in...' : 'Login';
-
   const getError = () => {
     return (
-      ((isSuccess && data === null) || isError) && (
-        <p className={styles.error}>Error in logging</p>
-      )
+      ((isSuccess && data == null) || isError) && <p className={styles.error}>Error in logging</p>
     );
   };
 
@@ -87,7 +71,7 @@ const Login = () => {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           {getInputs()}
-          <button className={styles.button}>{buttonText}</button>
+          <button className={styles.button}>{isPending ? 'Logging you in...' : 'Login'}</button>
           {getError()}
         </form>
 
