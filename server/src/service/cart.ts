@@ -13,10 +13,6 @@ export const addToCartService = async (
       return { error: 'userId is invalid', statusCode: 401 };
     }
 
-    if (quantity <= 0 || productId <= 0 || price < 0) {
-      return { error: 'Invalid product id, quantity or price', statusCode: 400 };
-    }
-
     const [activeCart] = await Cart.findOrCreate({ where: { userId, isActive: true } });
     const { cartId } = activeCart;
 
@@ -76,12 +72,6 @@ export const updateCartItemQuantityService = async (
       return { error: 'userId is invalid', statusCode: 401 };
     }
 
-    const productIdNumber = parseInt(productId);
-
-    if (productIdNumber <= 0) {
-      return { error: 'Invalid product id', statusCode: 400 };
-    }
-
     if (!(quantity === 1 || quantity === -1)) {
       return { error: 'Quantity should be +1 or -1', statusCode: 400 };
     }
@@ -93,7 +83,7 @@ export const updateCartItemQuantityService = async (
     }
 
     const { cartId } = activeCart;
-    const cartItem = await CartItem.findOne({ where: { cartId, productId: productIdNumber } });
+    const cartItem = await CartItem.findOne({ where: { cartId, productId: parseInt(productId) } });
 
     if (cartItem === null) {
       return { error: 'Cart item not found', statusCode: 404 };
@@ -119,12 +109,6 @@ export const deleteCartItemService = async (userId: number | undefined, productI
       return { error: 'userId is invalid', statusCode: 401 };
     }
 
-    const productIdNumber = parseInt(productId);
-
-    if (productIdNumber <= 0) {
-      return { error: 'Invalid product id', statusCode: 400 };
-    }
-
     const activeCart = await Cart.findOne({ where: { userId, isActive: true } });
 
     if (activeCart == null) {
@@ -132,7 +116,9 @@ export const deleteCartItemService = async (userId: number | undefined, productI
     }
 
     const { cartId } = activeCart;
-    const cartsDeleted = await CartItem.destroy({ where: { cartId, productId: productIdNumber } });
+    const cartsDeleted = await CartItem.destroy({
+      where: { cartId, productId: parseInt(productId) }
+    });
 
     if (cartsDeleted === 0) {
       return { error: 'Cart item not found', statusCode: 404 };

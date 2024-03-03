@@ -16,7 +16,10 @@ const CartItem = sequelize.define<CartItemModel>('cart_item', {
   cartItemId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    validate: {
+      isInt: true
+    }
   },
   cartId: {
     type: DataTypes.INTEGER,
@@ -28,12 +31,17 @@ const CartItem = sequelize.define<CartItemModel>('cart_item', {
   },
   productId: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isInt: true,
+      min: 0
+    }
   },
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
+      isInt: true,
       min: 0
     }
   },
@@ -41,6 +49,7 @@ const CartItem = sequelize.define<CartItemModel>('cart_item', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
     validate: {
+      isDecimal: true,
       min: 0
     }
   }

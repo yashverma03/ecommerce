@@ -13,7 +13,10 @@ const Cart = sequelize.define<CartModel>('cart', {
   cartId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    validate: {
+      isInt: true
+    }
   },
   userId: {
     type: DataTypes.INTEGER,
