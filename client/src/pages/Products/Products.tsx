@@ -50,9 +50,7 @@ const Products = () => {
         value={sort}
         onChange={(event) => setSort(event.target.value)}
       >
-        <option value='' hidden>
-          Sort by
-        </option>
+        <option value=''>Sort by</option>
 
         {options.map((option, index) => (
           <option key={index} value={option.id}>
@@ -103,9 +101,7 @@ const Products = () => {
         value={category}
         onChange={(event) => setCategory(event.target.value)}
       >
-        <option value='' hidden>
-          Select a category
-        </option>
+        <option value=''>Select a category</option>
 
         {categoryQuery.data?.map((category, index) => {
           const capitalizedCategory = category.charAt(0).toUpperCase() + category.slice(1);
