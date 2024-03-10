@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './Footer.module.css';
 import logo from '../../assets/logo.svg';
 import instagramIcon from '../../assets/footer/instagramIcon.svg';
@@ -6,6 +6,8 @@ import facebookIcon from '../../assets/footer/facebookIcon.svg';
 import twitterIcon from '../../assets/footer/twitterIcon.svg';
 
 const Footer = () => {
+  const { pathname } = useLocation();
+
   const links = [
     { name: 'Contact Us', url: '#' },
     { name: 'About Us', url: '#' },
@@ -36,7 +38,7 @@ const Footer = () => {
 
   const getClassName = () => {
     const hideOnPages = ['/login', '/sign-up'];
-    const hide = hideOnPages.includes(location.pathname);
+    const hide = hideOnPages.includes(pathname);
     return hide ? 'hide' : styles.main;
   };
 

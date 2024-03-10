@@ -12,7 +12,7 @@ import type { RootState } from '../../store/store';
 const Header = () => {
   const [input, setInput] = useState('');
   const dispatch = useDispatch();
-  const location = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
 
@@ -41,7 +41,7 @@ const Header = () => {
 
   const getClassName = () => {
     const hideOnPages = ['/login', '/sign-up'];
-    const hide = hideOnPages.includes(location.pathname);
+    const hide = hideOnPages.includes(pathname);
     return hide ? 'hide' : styles.main;
   };
 
