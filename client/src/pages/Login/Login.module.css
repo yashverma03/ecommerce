@@ -48,7 +48,7 @@
 }
 
 .label {
-  @apply w-full
+  @apply w-[60%]
   font-[400]
   text-[16px];
 }

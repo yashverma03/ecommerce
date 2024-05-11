@@ -36,8 +36,18 @@ const Login = () => {
 
   const getInputs = () => {
     const inputs = [
-      { id: 'email', label: 'Email', placeholder: 'Your email', type: 'email' },
-      { id: 'password', label: 'Password', placeholder: 'Your password', type: 'password' }
+      {
+        id: 'email',
+        label: 'Email',
+        placeholder: 'Your email  (testing: test@gmail.com)',
+        type: 'email'
+      },
+      {
+        id: 'password',
+        label: 'Password',
+        placeholder: 'Your password  (testing: password)',
+        type: 'password'
+      }
     ];
 
     return inputs.map((input) => {
