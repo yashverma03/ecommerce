@@ -105,6 +105,14 @@ const Cart = () => {
     ));
   };
 
+  const getTotalPrice = () => {
+    const price = query.data?.reduce(
+      (total, cart) => total + cart.productDetails.price * cart.quantity,
+      0
+    );
+    return price?.toFixed(2);
+  };
+
   const getErrorMessage = () => {
     if (buyMutation.isError || (buyMutation.isSuccess && buyMutation.data == null)) {
       return <p className={`error ${styles.errorMessage}`}>Error in creating payment session</p>;
@@ -127,6 +135,9 @@ const Cart = () => {
     <section className={styles.section}>
       <form className={styles.main}>
         <article className={styles.cartItems}>{getCartItems()}</article>
+        <p className={styles.price}>
+          Total price: <strong className={styles.priceStrong}>₹{getTotalPrice()}</strong>
+        </p>
         <button
           className={styles.buyButton}
           disabled={buyMutation.isPending}

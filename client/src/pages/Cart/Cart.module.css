@@ -95,6 +95,19 @@
   hover:bg-red-600;
 }
 
+.price {
+  @apply text-[22px]
+  font-semibold
+  text-[#313131]
+  self-center
+  mt-[100px];
+}
+
+.priceStrong {
+  @apply text-blue-600
+  font-bold;
+}
+
 .buyButton {
   @apply w-fit
   bg-yellow-400
@@ -102,7 +115,7 @@
   px-[85px]
   py-[15px]
   mx-auto
-  mt-[100px]
+  mt-[80px]
   transition-all
   duration-300
   hover:bg-yellow-500
