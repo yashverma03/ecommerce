@@ -5,8 +5,7 @@ import { getProductByIdService } from './product.ts';
 export const addToCartService = async (
   userId: number | undefined,
   productId: number,
-  quantity: number,
-  price: number
+  quantity: number
 ) => {
   try {
     if (userId === undefined) {
@@ -19,13 +18,14 @@ export const addToCartService = async (
     const existingCarts = await CartItem.findAll({ where: { cartId } });
     const existingCart = existingCarts.find((cart) => cart.productId === productId);
 
+    const product = await getProductByIdService(productId.toString());
+
     if (existingCart == null) {
-      const newCart = await CartItem.create({ cartId, productId, quantity, price });
+      const newCart = await CartItem.create({ cartId, productId, quantity, price: product.price });
       return { message: 'Product added to cart successfully', cartItem: newCart };
     }
 
     existingCart.quantity += quantity;
-    existingCart.price = price;
     const updatedCart = await existingCart.save();
     return { message: 'Cart updated successfully', cartItem: updatedCart };
   } catch (error: any) {

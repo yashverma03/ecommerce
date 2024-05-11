@@ -2,16 +2,15 @@
 
 - Deployed (frontend)- https://ecommerce-001.onrender.com
 - Deployed (backend)- https://api-ecommerce-001.onrender.com
-- [Postman API collection](https://www.postman.com/yashverma03/workspace/shared/collection/21358500-03e60602-9136-4b06-986d-849e0bf40c89)
+- [Postman API collection](https://www.postman.com/yashverma03/ecommerce/overview)
 - [Video](https://drive.google.com/file/d/1hw-Vz2J3cQAxtwn9_OGBVj1lYIFWCEHL/view?usp=drive_link)
 - Test User- username: `test@gmail.com` password: `password`, or you can create your own account
 
 ## Description
 
-- Build a responsive ecommerce web app for buying products and payment integration using stripe API.
-- Implemented authentication, search and price filters, shopping cart, checkout, caching and rate limiting.
-- Enhanced data consistency and data reliability by 12% by using relational database.
-- Tech: Typescript, ReactJS, Redux, Tanstack query, Tailwind CSS, NodeJS, ExpressJS, MySQL, Sequelize.
+- Build a responsive ecommerce web app for buying products
+- Implemented payment integration using Stripe API, search and price filters, pagination, shopping cart and authentication
+- Tech: TypeScript, ReactJS, Redux, NodeJS, MySQL
 
 ## Screenshots
 
@@ -47,15 +46,27 @@
 - Requirements- Node.js
 - Create a .env file in client folder (refer to [.env.example](./client/.env.example))
 - Open terminal in the project directory and run the following commands:
-  - `cd ./client`
-  - `npm ci`
-  - `npm start`
+  ```bash
+    cd ./client
+  ```
+  ```bash
+    npm ci
+  ```
+  ```bash
+    npm start
+  ```
 
 ### Server
 
 - Requirements- Node.js, MySQL
 - Create a .env file in server folder (refer to [.env.example](./server/.env.example))
 - Open terminal in the project directory and run the following commands:
-  - `cd ./server`
-  - `npm ci`
-  - `npm start`
+  ```bash
+    cd ./server
+  ```
+  ```bash
+    npm ci
+  ```
+  ```bash
+    npm start
+  ```

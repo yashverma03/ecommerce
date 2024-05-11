@@ -11,12 +11,11 @@ export const addToCart = (req: AuthRequest, res: Response, next: NextFunction) =
   const request = async () => {
     try {
       const { userId } = req;
-      const { productId, quantity, price }: AddToCartBody = req.body;
+      const { productId, quantity }: AddToCartBody = req.body;
       const { message, cartItem, statusCode, error } = await addToCartService(
         userId,
         productId,
-        quantity,
-        price
+        quantity
       );
 
       if (error !== undefined) {

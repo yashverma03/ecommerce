@@ -47,12 +47,10 @@ const Product = () => {
       navigate('/login');
       return;
     }
-
     if (data == null) {
       return;
     }
-
-    mutation.mutate({ productId: data.id, price: data.price });
+    mutation.mutate({ productId: data.id });
   };
 
   const getMessage = () => {
