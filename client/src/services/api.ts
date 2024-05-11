@@ -66,7 +66,6 @@ type Categories = string[];
 
 interface AddToCartBody {
   productId: number;
-  price: number;
   quantity?: number;
 }
 
@@ -194,7 +193,6 @@ export const addToCart = async (cartItem: AddToCartBody) => {
   try {
     const body = {
       productId: cartItem.productId,
-      price: cartItem.price,
       quantity: cartItem.quantity ?? 1
     };
 

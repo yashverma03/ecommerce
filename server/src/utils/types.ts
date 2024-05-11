@@ -49,7 +49,6 @@ export type Categories = string[];
 export interface AddToCartBody {
   productId: number;
   quantity: number;
-  price: number;
 }
 
 export interface UpdateCartBody {
