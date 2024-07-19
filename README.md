@@ -8,10 +8,9 @@
 
 ## Description
 
-- Build a responsive ecommerce web app for buying products and payment integration using stripe API.
-- Implemented authentication, search and price filters, shopping cart, checkout, caching and rate limiting.
-- Enhanced data consistency and data reliability by 12% by using relational database.
-- Tech: Typescript, ReactJS, Redux, Tanstack query, Tailwind CSS, NodeJS, ExpressJS, MySQL, Sequelize.
+- Build a responsive ecommerce web app for buying products
+- Implemented payment integration using Stripe API, search and price filters, pagination, shopping cart and authentication
+- Tech: TypeScript, ReactJS, Redux, NodeJS, MySQL
 
 ## Screenshots
 
